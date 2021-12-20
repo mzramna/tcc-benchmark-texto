@@ -504,6 +504,7 @@ o dbbench é um software para benchmark e teste de estresse de bancos de dados v
 \label{ch: desenvolvimento}
 o desenvolvimento do software foi feito utilizando varios metodos de analize de log para a agilização do debug,alem disso possibilitou que os dados gerados pudessem ser mais facilmente conferidos durante o desenvolvimento fazendo com que tivesse,apesar de uma geração randômica,uma filtragem humana dos tipos de dados gerados.\newline
 \section{geração de dados}
+\label{sec:geração de dados}
 os dados gerados para os testes foram gerados em 2 etapas:
 \begin{itemize}
 \item valores brutos em sqlite
@@ -512,7 +513,38 @@ os dados gerados para os testes foram gerados em 2 etapas:
 essas etapas funcionam da seguinte forma:\newline
 de inicio os dados são gerados em sqlite pelo fato de , caso algum problema ocorra e a maquina que estava gerando os dados seja abruptamente desligada,os dados ja gerados ja terão sido salvos no banco de dados sqlite,fazendo com que nenhum progresso tenha sido perdido,já que a etapa de geração de dados é a etapa mais demorada entre todas as etapas do algoritimo de criação dos dados de testes,o codigo consegue gerar os dados de 3 formas,apenas a ultima é realmente utilizada,as outras duas foram feitas para propósito de testes,gerar uma quantidade x de dados de uma tabela expecífica,gerar uma quantidade x de cada dado de cada tabela do bd final e por fim gerar uma quantidade aleatória de cada tipo de dado para cada dado tabela do bd final,sempre terminando com uma quantidade final definida de dados gerados.\newline
 
+\section{tipos de dados gerados}
+\label{sec:tipos de dados gerados}
+para os testes foram selecionadas apenas algumas das possiveis operações de um banco de dados,sendo a maioria delas as operações mais utilizadas de um banco de dados:
+\begin{itemize}
+\item inserção de um novo dado
+\item leitura completa de todos os dados de uma tabela
+\item busca de elementos filtrados em determinada tabela
+\item busca de apenas alguns dados de elementos filtrados em determinada tabela
+\item edição de elementos
+\item deleção de elementos filtrados
+\end{itemize}
+foram selecionados essas operações devido ao quanto eles são utilizados,exceto pela leitura completa de uma tabela e pela busca filtrada com apenas a seleção de algumas colunas essas operações constituem um crud basico de um bd sql.\newline
+esses tipos de operação antes de serem geradas passam por varios processos de tratamento de erro para se certificar que não houve nenhuma dependencia que não foi gerada,como gerar uma cidade sem existir um pais cadastrado,esse foi um dos motivos de ter sido utilizado um arquivo sqlite ao inves de outro metodo de armazenamento,poder executar essa consulta de dependencia de forma rpida e apenas retornar indices validos para associações de tabela.
 
+\section{ambiente de desenvolvimento}
+\label{sec:ambiente de desenvolvimento}
+o ambiente utilizado foi dividido em 2 partes,programação local e remota,na programação remota as execuções eram feitas num servidor baseado em raspberry pi,e na programação local foram feitas na propria maquina local,sendo que a programação remota se provou bem util quando houve a necessidade de troca de computador ou sistema operacional,a programação remota ainda facilitou a implementação de um servidor unificado de analize de log\newline
+foram utilizados visual studio code e dbeaver para o desenvolvimento da aplicação principal,ainda foi utilizado uma implementação da suite ELK(elasticsearch ,logstash e kibana) de analize de log,os dois primeiros foram escolhidos dentre outros motivos por serem opensource e estarem disponiveis tanto para linux quanto windows,visto que ambos sistemas operacionais foram utilizados para o desenvolvimento,de acordo com a necessidade no momento.\newline
+para o controle de verão foi utilizado o git,deixando registrado todo o histórico de alterações do programa,o que se mostrou bem util para o rastreio de erros ocorridos durante o longo tempo de desenvolvimento do codigo.\newline
+para os testes iniciais do codigo foram utilizados containers docker não limitados durante a etapa de implmentação dos scripts do dbbench,que demandam a existencia dos servidores dos bancos de dados rodando,ao contrário do restante do desenvolvimento da aplicação,que não interagiu diretamente com os bancos de dados.\newline
+
+\section{sqlite}
+\label{sec:sqlite}
+o banco de dados do sqlite foi projetado para ser totalmente maleavel e modular,de forma que não teriam que ser geradas varias tabelas para os varios tipos de dados do benchmark.Foi pensado no seguinte metodo para se facilitar o desenvolvimento,uma tabela de indices de total de elementos de cada tabela,sendo cada elemento composto apenas pelo nome da tabela e pelo total de elementos cadastrados,a outra tabela é um pouco mais complexa.
+\begin{itemize}
+    \item a tabela de operações a ser executado é constituido de uma coluna inteira para o tipo de operação que será realizada,de acordo com \autoref{sec:tipos de dados gerados} 
+    \item uma coluna é um string contendo o nome do banco de dados que será executada a operação
+    \item uma coluna inteira para ,se for necessário, conter o id no bd do elemento trabalhado na operação,no caso de uma inserção é o id do novo elemento por exemplo
+    \item uma coluna text,nessa coluna serão inseridos valores adicionais necessários para a execução da operação,como os parametros de quais colunas devem ser atualizadas em um update,aqui os dados inseridos são salvos em formato json para facilitar o trabalho com a linguagem python,visto que existe uma conversão direta de string json para o tipo dictionary do python
+    \item seguindo a mesma idéia da coluna anterior ,essa coluna também é uma coluna text onde são inseridos dados em formato json,esses dados são os dados obrigatórios de qualquer operação
+\end{itemize}
+ dessa forma independente se é apenas uma operação de listagem completa,que só necessita de ter preenchida a coluna com o nome do bd e a coluna com o tipo de operação ou se for uma operação de update onde todos os campos podem estar preenchidos, o banco de dados sqlite consegue lidar de forma rapida e segura com qualquer uma das operações e dados gerados pelo algoritimo
 
 
 \chapter{testes}
