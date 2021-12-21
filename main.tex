@@ -423,21 +423,7 @@ As JVMs estão disponíveis para muitas plataformas de hardware e software (ou s
     \sig{WINE}
     
 \end{siglas}
-%\newenvironment{cirquitos integrados}{
-%  \pretextualchapter{\listadecirquitosname}
-%  \begin{symbols}
-%  \beginAutoTable{cirquitos integrados}{nome do modulo & categoria & descrição  }{3}{p{.18\textwidth}|p{.14\textwidth}|p{.60\textwidth}}
-%}{
-%\end{longtable}
-%  \end{symbols}
-%  \cleardoublepage
-%}
-%\newcounter{hdw}
-%\DeclareRobustCommand{\hdw}[1]{
-%   \refstepcounter{hdw}
-%   \label{hdw:#1}
-%   #1 &
-%   }
+
 
 \tableofcontents*
 
@@ -449,16 +435,14 @@ As JVMs estão disponíveis para muitas plataformas de hardware e software (ou s
 \chapter*{Introdução}
 \addcontentsline{toc}{chapter}{\textbf{Introdução}}
 \markright{Introdução}
-\label{chapter:introducao}
+\label{ch:introducao}
 Esta pesquisa foi baseada na crescente adoção de processadores \myref{sig}{arm}, estes processadores conseguem entregar uma eficiência energética muito superior a comumente utilizada nos computadores e servidores (arquitetura \myref{sig}{x86}). Esta arquitetura possui uma versão 64 bit, que hoje em dia é praticamente a única variante utilizada a \myref{sig}{x64}. Essa arquitetura é no geral apenas uma variante aditiva da \myref{sig}{x86} na qual são adicionadas varias instruções e vários suportes, o principal deles sendo suporte a comandos 64 bits.O mesmo pode ser dito para a arquitetura \myref{sig}{aarch64} ou arm64 que é uma variante aditiva da \myref{sig}{arm},essa não é ,como a \myref{sig}{x64} uma versão única,mas sim uma "denominação" das variantes e evoluções da arquitetura \myref{sig}{arm} com suporte a 64bit,as arquiteturas passaram a ser denominadas assim a partir da armv8,entretanto existem versões do \myref{sig}{arm},como o armv7l, que consegue trabalhar com instruções de 64bit,apesar de ser uma arquitetura 32 bits.\newline
 O foco da pesquisa foi feito em cima do uso de servidores \myref{sig}{arm}, que é baixo, apesar de totalmente possível e existente no mundo corporativo.Existem alguns servidores comerciais que utilizam a arquitetura \myref{sig}{arm} para seu funcionamento.Desta forma foi feita uma comparação na utilização desses processadores para a simulação de uma aplicação de banco de dados.Essa aplicação simula a utilização de forma realística de uma base de dados de uma locadora. \newline
 O cenário foi escolhido a partir de um esquema de banco de dados genérico da internet e foram utilizados os bancos de dados PostgreSQL e MariaDB,visto que são os bancos de dados de propósito geral mais utilizados atualmente.Foi preferido o MariaDB sobre o MySQL visto que não existe uma versão dele para a arquitetura \myref{sig}{arm} e ambos são basicamente o mesmo sistema.\newline
 foi criado um programa para a geração de dados realísticos baseados na biblioteca faker implementada na linguagem Python.Estes dados são gerados para cada pais especifico em idiomas e caracteres compatíveis com a região escolhida.Desta forma é plausível que estes dados,como nome,telefone,endereço e até mesmo usuário e senha sejam possíveis de existirem.Foi escolhido essa forma de inserção pois um preenchimento de dados totalmente randômicos e de tamanho fixo podem apresentar discrepâncias com o desempenho num ambiente real de uso,afetando tanto o tempo,quanto carga dos processadores de forma negativa.Os dados utilizados em cada teste são exatamente os mesmos,com a diferença apenas da quantidade,simbolizando o uso em um ambiente real,sendo assim o benchmark se torna mais aplicável a realidade.\newline
 
 \chapter{Fundamentação Teórica}
-\label{ch: fundamentacao teorica}
-
-
+\label{ch:fundamentacao teorica}
 
 \section{arquiteturas}
 \label{sec: arquiteturas}
@@ -480,13 +464,6 @@ Existem alguns computadores com processador \myref{sig}{arm} que não são \myre
 
 Como os processadores \myref{sig}{arm} começaram a ficar mais comuns visto que algumas fabricantes como a apple agora fabricam computadores baseados em \myref{sig}{arm} e a gigabyte agora possui versões de servidor com essa arquitetura de processador,isso faz com que seja cada vez mais fácil de se utilizar essa arquitetura já que se existem mais consumidores também vão existir mais programas feitos para rodar nessa arquitetura,e visto o quanto um computador com processador \myref{sig}{arm} economiza energia para entregar o mesmo poder de processamento de um outro com processador \myref{sig}{x86} , essa diferença pode ser muito benéfica para os vários tipos de empresa que utilizam servidores,já que isso pode significar um impacto considerável no consumo energético da empresa dependendo do quanto ele é utilizado a nível de processamento.\newline
 
-\subsection{Subseção de Exemplo}
-
-
-
-\section{Seção de Exemplo 2}
-\label{sec: exemplo2}
-
 \section{bancos de dados}
 \label{sec: bancos de dados}
 banco de dados é um metodo de armazenamento de dados de forma estruturada para que sejam mais faceis de serem associados e de serem filtradas,elas também podem ser armazenadas de forma a economizar espaço de armazenamento dependendo da forma como foi otimizado o banco de dados,os bancos de dados ainda possuem a capacidade de realizar algumas redundancias de segurança para o armazenamento de dados,de forma que a validação de um dado inserido possa ser feito a nivel de armazenamento de dados e não a nivel de programação,o que pode simplificar o desenvolvimento de um programa
@@ -496,10 +473,15 @@ os bancos de dados são onde a maioria dos dados de um sistema são salvos,esses
 os tipos de bancos de dados analizados são os bancos de dados sql que são os mais genéricos,de forma que podem ser utilizados no máximo de aplicações diferentes possiveis,isso faz com que os bancos de dado sql sejam os melhores para serem simulados,um dos que foi analizado para ser testado foi o mongodb e o oracle,mas o mongodb não possui propósito geral e o da oracle não existe uma versão para \myref{sig}{arm} até o momento que o projeto foi pensado.
 
 \section{software de benchmark}
-\label{sec: software de benchmark}
+\label{sec:software de benchmark}
 o benchmark foi feito com 2 softwares principais um software de terceiros chamado dbbench que é um programa dedicado para o benchmark de bancos de dados e o segundo foi criado para inserir de forma padronizada os dados para o dbbench realizar os testes.
 o dbbench é um software para benchmark e teste de estresse de bancos de dados variados que utilizam arquivos de configuração para fazer variados tipos de testes.o software desenvolvido gera esses arquivos de configuração,sendo que dentro dos arquivos é possivel inserir as queries que serão testadas e o software criado faz isso,de forma a manter os mesmos dados pesquisados mas alterar a quantidade de consultas recorrentes ou de operações por segundo,o software criado gera a quantidade desejada de operações 
 
+\section{biblioteca faker}
+\label{sec:biblioteca faker}
+a biblioteca faker é uma biblioteca conhecida para a geração de mockdata,que são dados gerados randomicamente para se testar a capacidade de um algoritimo lidar com dados,essa biblioteca comumente é usada na etapa de testes de um algoritimo,seja para testes de segurança,para proteger de bots de criação de contas ou algo do tipo,quanto para testes de estresse, quanto para qualquer tipo de teste que dependa de dados "realisticos".\newline
+essa biblioteca foi selecionada pois possui facil utilização,documentação abrangente e de facil compreenção e suporte para multiplos idiomas.apesar da bibliotea apenas suportar todos os seus tipos de geração mais completos na localização dos EUA , dentre esses está um tipo que corresponde a todo um perfil de usuario,contendo de endereço até a senha e podendo ser uma senha fraca ou forte.\newline
+para propósitos de teste foram gerados apenas dados na localização do Brasil apenas por conveniencia,e também pois varios dos dados utilizados são os mais simples ,de modo que não são necessários os tipos mais complexos que existem apenas para certos idiomas.
 \chapter{desenvolvimento}
 \label{ch: desenvolvimento}
 o desenvolvimento do software foi feito utilizando varios metodos de analize de log para a agilização do debug,alem disso possibilitou que os dados gerados pudessem ser mais facilmente conferidos durante o desenvolvimento fazendo com que tivesse,apesar de uma geração randômica,uma filtragem humana dos tipos de dados gerados.\newline
@@ -526,6 +508,14 @@ para os testes foram selecionadas apenas algumas das possiveis operações de um
 \end{itemize}
 foram selecionados essas operações devido ao quanto eles são utilizados,exceto pela leitura completa de uma tabela e pela busca filtrada com apenas a seleção de algumas colunas essas operações constituem um crud basico de um bd sql.\newline
 esses tipos de operação antes de serem geradas passam por varios processos de tratamento de erro para se certificar que não houve nenhuma dependencia que não foi gerada,como gerar uma cidade sem existir um pais cadastrado,esse foi um dos motivos de ter sido utilizado um arquivo sqlite ao inves de outro metodo de armazenamento,poder executar essa consulta de dependencia de forma rpida e apenas retornar indices validos para associações de tabela.
+
+\section{alimentação do algoritimo}
+\label{sec:alimentação do algoritimo}
+
+o algoritimo funciona de forma que qualquer banco de dados que seja informado num arquivo json seguindo determinado padrão pode ter seus dados gerados,fazendo com que o algoritimo de geração de dados possa ser usado para qualquer banco de dados,o padrão é composto por uma tag para cada bd,sendo o nome do bd,e dentro dela uma estrutura de json com uma tag sendo o nome da coluna e seu conteudo um array de string contendo primeiro o tipo de dado,seguindo os padrões do algoritimo,e os outros valores sendo dados adicionais para a geração,sendo que a maioria das colunas do banco de dados inserido apenas possui um elemento\newline
+dentro do algoritimo existem varios tipos de dados aceitaveis,tais como id,nome,associação e timestamp,cada um deles possui um tipo bem definido pelo seu nome,mas o unico que vale a pena citar seu funcionamento é o associação,como descrito em \autoref{sec:sqlite} existe uma tabela do sqlite contendo as quantidades de elementos associados a cada tabela do banco de dados final,o tipo de associação vai pegar esse valor e usar uma função de seleção randômica para que seja escolhido um elemento de id existente no intervalo descrito,caso não exista nenhum elemento dessa tabela,por um tratamento de erro é gerado um elemento para ela,para assim poder fazer a associação funcionar no novo elemento associado que foi criado.\newline
+os unicos dados que não são passados para o algoritimo funcionar são o pais que deve ser gerado os dados,de acordo com \autoref{sec:biblioteca faker}, e a quantidade de dados que devem ser geradas,ambos sendo necessários de serem inseridos na chamada da função.
+
 
 \section{ambiente de desenvolvimento}
 \label{sec:ambiente de desenvolvimento}
