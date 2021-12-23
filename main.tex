@@ -485,6 +485,7 @@ para propósitos de teste foram gerados apenas dados na localização do Brasil 
 \chapter{desenvolvimento}
 \label{ch: desenvolvimento}
 o desenvolvimento do software foi feito utilizando varios metodos de analize de log para a agilização do debug,alem disso possibilitou que os dados gerados pudessem ser mais facilmente conferidos durante o desenvolvimento fazendo com que tivesse,apesar de uma geração randômica,uma filtragem humana dos tipos de dados gerados.\newline
+durante esse capítulo serao descritos os procedimentos mais importantes das etapas de desenvolvimento e funcionamento do software,de forma que fique o mais simples de entender possivel.\newline
 \section{geração de dados}
 \label{sec:geração de dados}
 os dados gerados para os testes foram gerados em 2 etapas:
@@ -493,7 +494,19 @@ os dados gerados para os testes foram gerados em 2 etapas:
 \item valores trabalhados em csv
 \end{itemize}
 essas etapas funcionam da seguinte forma:\newline
-de inicio os dados são gerados em sqlite pelo fato de , caso algum problema ocorra e a maquina que estava gerando os dados seja abruptamente desligada,os dados ja gerados ja terão sido salvos no banco de dados sqlite,fazendo com que nenhum progresso tenha sido perdido,já que a etapa de geração de dados é a etapa mais demorada entre todas as etapas do algoritimo de criação dos dados de testes,o codigo consegue gerar os dados de 3 formas,apenas a ultima é realmente utilizada,as outras duas foram feitas para propósito de testes,gerar uma quantidade x de dados de uma tabela expecífica,gerar uma quantidade x de cada dado de cada tabela do bd final e por fim gerar uma quantidade aleatória de cada tipo de dado para cada dado tabela do bd final,sempre terminando com uma quantidade final definida de dados gerados.\newline
+de inicio os dados são gerados em sqlite pelo fato de , caso algum problema ocorra e a maquina que estava gerando os dados seja abruptamente desligada,os dados ja gerados ja terão sido salvos no banco de dados sqlite,fazendo com que nenhum progresso tenha sido perdido,já que a etapa de geração de dados é a etapa mais demorada entre todas as etapas do algoritimo de criação dos dados de testes.\newline
+o codigo consegue gerar os dados de 3 formas,apenas a ultima é realmente utilizada.
+as outras duas foram feitas para propósito de testes
+\begin{itemize}
+\item gerar uma quantidade x de dados de uma tabela expecifica
+\item gerar uma quantidade x de cada tipo de dado para cada tabela do bd final
+\item gerar uma quantidade aleatória de cada tipo de dado para cada tabela do bd final ate atingir o total de operações informadas
+\end{itemize}
+
+todos esses tipos de geração sao feitos pela mesma função,e sai alterados pelos parâmetros passados para ela,de forma que ela prioriza os parametros referentes ao 3 tipo de geração.\newline
+fora os parametros relacionados aos tipos de geracao informados existem os parametros relacionados a \autoref{sec:biblioteca faker} e uma lista que define quais tipos de operação,descritos em \autoref{sec:tipos de dados gerados} ,que defines,caso nao seja vazia,quais os tipos de dados que serao gerados,isso foi util pois foi utilizado o tipo de criacao de dados de inserção na primeira etapa,antes de gerar oa dados dos outros tipos , juntamente com mais dados de inserção.\newline
+devido a limitações ,intencionais,o valor total de operações inserido na a cada operação deve considerar a quantidade da operação anterior,pois o algoritimo não irá verificar nada alem da quantidade total de elementos cadas trados no sqlite,ou seja,no caso dos testes feitos,foram gerados 50.000 dados de inserção,e posteriormente foram pedidos 5.000.000 dados randomicos,o que resultou em 50.000 dados de inserção seguidos de 4.950.000 dados randomicos gerados.
+
 
 \section{tipos de dados gerados}
 \label{sec:tipos de dados gerados}
@@ -512,7 +525,7 @@ esses tipos de operação antes de serem geradas passam por varios processos de 
 \section{alimentação do algoritimo}
 \label{sec:alimentação do algoritimo}
 
-o algoritimo funciona de forma que qualquer banco de dados que seja informado num arquivo json seguindo determinado padrão pode ter seus dados gerados,fazendo com que o algoritimo de geração de dados possa ser usado para qualquer banco de dados,o padrão é composto por uma tag para cada bd,sendo o nome do bd,e dentro dela uma estrutura de json com uma tag sendo o nome da coluna e seu conteudo um array de string contendo primeiro o tipo de dado,seguindo os padrões do algoritimo,e os outros valores sendo dados adicionais para a geração,sendo que a maioria das colunas do banco de dados inserido apenas possui um elemento\newline
+o algorítimo funciona de forma que qualquer banco de dados que seja informado num arquivo json seguindo determinado padrão pode ter seus dados gerados,fazendo com que o algoritimo de geração de dados possa ser usado para qualquer banco de dados,o padrão é composto por uma tag para cada bd,sendo o nome do bd,e dentro dela uma estrutura de json com uma tag sendo o nome da coluna e seu conteudo um array de string contendo primeiro o tipo de dado,seguindo os padrões do algoritimo,e os outros valores sendo dados adicionais para a geração,sendo que a maioria das colunas do banco de dados inserido apenas possui um elemento\newline
 dentro do algoritimo existem varios tipos de dados aceitaveis,tais como id,nome,associação e timestamp,cada um deles possui um tipo bem definido pelo seu nome,mas o unico que vale a pena citar seu funcionamento é o associação,como descrito em \autoref{sec:sqlite} existe uma tabela do sqlite contendo as quantidades de elementos associados a cada tabela do banco de dados final,o tipo de associação vai pegar esse valor e usar uma função de seleção randômica para que seja escolhido um elemento de id existente no intervalo descrito,caso não exista nenhum elemento dessa tabela,por um tratamento de erro é gerado um elemento para ela,para assim poder fazer a associação funcionar no novo elemento associado que foi criado.\newline
 os unicos dados que não são passados para o algoritimo funcionar são o pais que deve ser gerado os dados,de acordo com \autoref{sec:biblioteca faker}, e a quantidade de dados que devem ser geradas,ambos sendo necessários de serem inseridos na chamada da função.
 
@@ -550,14 +563,6 @@ alem disso serão usadas versões do sistema debian,no orangepi o armbian e no p
 
 \chapter{Metodologia}
 \label{ch: materiais e métodos}
-
-\section{Exemplo}
-
- (Equação \ref{eq: kernel svm}).
-\begin{equation}
-\label{eq: kernel svm}
-    c = \frac {1} {\textit{nf}}
-\end{equation}
 
 
 
