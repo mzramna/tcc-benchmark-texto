@@ -528,7 +528,7 @@ esses tipos de operação antes de serem geradas passam por varios processos de 
 o algorítimo funciona de forma que qualquer banco de dados que seja informado num arquivo json seguindo determinado padrão pode ter seus dados gerados,fazendo com que o algoritimo de geração de dados possa ser usado para qualquer banco de dados,o padrão é composto por uma tag para cada bd,sendo o nome do bd,e dentro dela uma estrutura de json com uma tag sendo o nome da coluna e seu conteudo um array de string contendo primeiro o tipo de dado,seguindo os padrões do algoritimo,e os outros valores sendo dados adicionais para a geração,sendo que a maioria das colunas do banco de dados inserido apenas possui um elemento\newline
 dentro do algoritimo existem varios tipos de dados aceitaveis,tais como id,nome,associação e timestamp,cada um deles possui um tipo bem definido pelo seu nome,mas o unico que vale a pena citar seu funcionamento é o associação,como descrito em \autoref{sec:sqlite} existe uma tabela do sqlite contendo as quantidades de elementos associados a cada tabela do banco de dados final,o tipo de associação vai pegar esse valor e usar uma função de seleção randômica para que seja escolhido um elemento de id existente no intervalo descrito,caso não exista nenhum elemento dessa tabela,por um tratamento de erro é gerado um elemento para ela,para assim poder fazer a associação funcionar no novo elemento associado que foi criado.\newline
 os unicos dados que não são passados para o algoritimo funcionar são o pais que deve ser gerado os dados,de acordo com \autoref{sec:biblioteca faker}, e a quantidade de dados que devem ser geradas,ambos sendo necessários de serem inseridos na chamada da função.
-
+os outros dados relevantes referentes ao funcionamento da chamada da função estão em \autoref{sec:geração de dados}
 
 \section{ambiente de desenvolvimento}
 \label{sec:ambiente de desenvolvimento}
@@ -536,6 +536,7 @@ o ambiente utilizado foi dividido em 2 partes,programação local e remota,na pr
 foram utilizados visual studio code e dbeaver para o desenvolvimento da aplicação principal,ainda foi utilizado uma implementação da suite ELK(elasticsearch ,logstash e kibana) de analize de log,os dois primeiros foram escolhidos dentre outros motivos por serem opensource e estarem disponiveis tanto para linux quanto windows,visto que ambos sistemas operacionais foram utilizados para o desenvolvimento,de acordo com a necessidade no momento.\newline
 para o controle de verão foi utilizado o git,deixando registrado todo o histórico de alterações do programa,o que se mostrou bem util para o rastreio de erros ocorridos durante o longo tempo de desenvolvimento do codigo.\newline
 para os testes iniciais do codigo foram utilizados containers docker não limitados durante a etapa de implmentação dos scripts do dbbench,que demandam a existencia dos servidores dos bancos de dados rodando,ao contrário do restante do desenvolvimento da aplicação,que não interagiu diretamente com os bancos de dados.\newline
+a geração do bd inicial foi feito completamente em um raspberry pi 4 com um pequeno overclock,essa geração foi feita durante alguns dias,visto que o raspberry pi ,de acordo com testes de velocidade feitos \autoref{sec:testes de tempo},esse bd constitui-se de todas as operações feitas durante o teste de estresse
 
 \section{sqlite}
 \label{sec:sqlite}
@@ -557,6 +558,14 @@ o orange pi é um SBC ARM baseado no processador allwinner h3 com 3 usb 2.0 , 1 
 o computador de mesa é um dual core intel com 4 gb de memória ram ddr3, 4 usb 2.0 porta de rede gigabit e algumas portas sata2,entretanto essas portas sta não serão usadas já que o propósito é manter as 2 maquinas o mais próximas em relação a hardwaree possivel
 outros metodos que serão usados para manter as maquinas mais similares serão limitar o clock de ambos para 1.2ghz,que é o clock mais estável para o orange pi ,a memória usada será limitada a 750 mb para o stack do docker e tanto o sistema operacional quanto os dados do docker serão salvos em cartões de memória microsd classe 10 com limitação de acesso de 10 MB/s de escrita e leitura , no orangepi será usado o leitor da própria placa para conectar o microsd e no pc será usado um adaptador usb.
 alem disso serão usadas versões do sistema debian,no orangepi o armbian e no pc o prórpio debian padrão,ambos na versão buster
+
+\section{testes de tempo}
+\label{sec:testes de tempo}
+
+foi feito um teste aditivo que testará 30 ciclos com adição de 100 em 100 elementos e cada ciclo,foram feitos um teste de 4 sub ciclos internos para cada um dos 30 ciclos,isso para ver o quanto de tempo é gasto em média para casos com muitos ou poucos dados gerados,sendo assim podendo gerar um valor de base de valor minimo gasto obrigatóriamente para cada interação.\newline
+os testes dessa vez foram modificados de forma a salvar os dados em um arquivo para consulta futura,que estão em anexo,os testes dessa vez foram realizados em um pc arm64 e um amd64,os dados resultaram em valores de tempo consistente em relação a diferença de frequencias das maquinas,sendo assim se existe um valor de perda entre as arquiteturas para esse teste é um valor irrisório,sendo que o pc amd64 apresentou testes cerca de 2 vezes mais rapidos e seu clock é aproximadamente o dobro do arm64,esses valores foram dados em relação ao tempo gasto por elemento em cada interação
+
+
 
 \chapter{Trabalhos Relacionados}
 \label{ch: trabalhos relacionados}
