@@ -472,8 +472,14 @@ Foi criado um programa para a geração de dados realísticos baseados na biblio
 %\label{ch:fundamentacao teorica}
 \ch{fundamentacao teorica}
 
-%\section{arquiteturas}
-%\label{sec:arquiteturas}
+\sec{virtualização}
+virtualização é uma tecnica usada para simular um computador dentro de outro,dependendo do método utilizado ele pode simular apenas uma camada ou mais de uma das camadas de hardware e software de um computador .
+um computador virtualizado pode receber varios nomes dependendo do método utilizado para virtualizar,os mais utilizados hoje em dia são maquinas virtuais e containers docker,a principal difetença deles é a camada de harware na qual ele executa
+
+\sec{maquina virtual}
+uma maquina virtual é rodada por um programa dentro de um sistema operacional,maquinas virtuais possuem varias limitações,dentre elas por rodar em uma camada de software ele possui um menor desempenho de cpu e não pode ter acesso a outros hardwares do computador , na maioria dos mecanismos de virtualização de maquina virtual só pode-se acessar ram,dispositivos de dados e hardwares plug’n’play como hardwares usb,entretanto não é possivel de se utilizar placas de video ou outros hardwares pci,uma vantagem desses mecanismos de virtualização é que você facilmente pode utilizar qualquer programa de um computador convencional nele
+uma maquina virtual geralmente é criada ao se instalar um sistema real de um computador convencional em uma maquina virtual,ou ao se usar uma midia de restauração de maquina virtual
+
 \sec{arquiteturas}
 Por definição arquitetura de computador é um conjunto de circuitos eletrônicos padronizado associado a um conjunto de instruções de forma a simplificar a programação deles para que funcionem comandos diferentes do binário para a programação de um eletrônico. Os compiladores utilizam esses conjuntos de instrução para que seja convertido o código de uma linguagem de programação para um binário de um programa. A arquitetura também define/limita várias propriedades do hardware, como quantidade máxima de \myref{sig}{ram}, de disco, suporte ou não de saída de video, capacidades de rede e vários outros, mesmo que algumas dessas limitações possam ser contornadas utilizando variações da arquitetura chamadas microarquiteturas.\newline
 
@@ -507,6 +513,20 @@ os tipos de bancos de dados analizados são os bancos de dados sql relacional qu
 docker é um sistema de virtualização de maquinas que busca ser mais simples de ser gerenciado e entregar mais desempenho do hardware real da maquina que está sendo usada.o docker busca executar as chamadas de seus ambientes virtualizados ,chamados de containers,ao nivel do sistema operacional,logo a cima do kernel do sistma,isso faz com que seja possivel dedicar parte dos hardwares da maquina real para um container,sendo possivel dentre outras coisas dividir de forma fixa porções do hardware ,como definir limite de ram usado ou quantidade de nucleos de cpu usados,isso foi aplicado nos testes realizados,para padronizar as expecificações tecnicas dos container usados nos testes,como descrito em \myref{sec}{ontainers docker},outra das funcionalidades do docker é a implementação de volumes,que é a fora de isolar as pastas do container e manter elas mesmo caso o container seja reinstalado para realizar atualização,essas atualizações são feitas por meio do metodo de instalação dos containers docker,as imagens,as imagens são feitas sequindo o modelo de snapshot,onde cada imagem não tem nenhum programa ou biblioteca atualizada a menos que seja deliberadamente feito pelo proprio programa ou pelo administrador do container durante sua execução,mas esse segundo geralmente não é feito,visto que os containers quando precisam ser atualizados é preferivel usar a atualização por imagem do que executando comandos por dentro dos containers rodando,um grande motivo disso é o docker-compose,como é descrito no \myref{sec}{docker-compose}.
 o docker foi desenvolvido a pedido da google usando a linguagem go,também desenvolvida por ela,ele foi desenvolvido visando a simplificação da gerencia dos clusters de processamento da google,que utilizam dezenas de computadores mais fracos para fazer o processamento , de forma que é mais barato para compor o ambiente para o processamento tão potente quanto se comprasse varias armas muito mais caras,alem disso o docker também facilita a manutenção devido a facil reimplementação de um container caso a maquina tenha algum problema,como visto em situações que ocorreram durante o periodo do desenvolvimento da aplicação,para se reinstalar o stack de aplicações de monitoramento de dados do ELK \myref{sec}{elasticsearch monitoring stack} foi necessário apenas em torno de 2 horas,incluindo completa formatação do servidor onde o stack estava rodando,instalação do stack e completa configuração do mesmo,isso caso não fosse feito com docker facilmente levaria 1 dia para a completa reinstalação e reconfiguração do stack,isso porque o stack foi instalado facilmente com o docker-compose e todos os volumes contendo os arquivos de configuração possuiam backup,e a restauração de backups de volumes é extremamente simplificada,ainda mais utilizando a ferramenta portainer \myref{sec}{portainer} com o docker-sock,o docker-sock é um metodo de controle remoto do docker,utilizando o socket todas as configurações e gerenciamentos são feitos da mesma forma como se que se tivesse sendo feito diretamente na maquina que o docker está rodando,isso faz com que o docker seja muito simples de unificar e replicar o mesmo comando em diversas maquinas diferentes.
 
+\subsec{container docker}
+um container docker roda a nivel de kernel, o que quer dizer que qualquer dispositivo ou dado disponivel na maquina real do usuario pode ser acessivel por um container docker,alem disso ele possui maior eficiencia de uso de ram e de cpu em comparação a maquinas virtuais ou outros metodos de virtualização, entretanto este método faz com que seja mais complicado de se utilizar de se acessar interface grafica de um container do que em uma maquina virtual,apesar de ainda ser possivel.
+uma das maiores utilizações dos containers docker é em ambientes de servidor,os containers docker são imaginados para isolar programas do sistema operacional da maquina real,de forma a caso algum problema ocorra com o programa,isso não afete a maquina real do usuario, em muitas situações são utilizados também como sistemas de desenvolvimento virtualizados ,de forma a sempre ser fácil de se replicar e de corrigir problemas durante a criação de um programa.
+containers docker também costumam ser mais faceis e rapidos de se implementar do que maquinas virtuais,visto que containers utilizam imagens docker para sua criação,que são geradas a partir de arquivos dockerfile ou a partir de um repositório
+
+\subsec{dockerfile}
+os arquivos dockerfile são mais leves de se transportar,mas demoram mais pra serem instaladas,visto que uma imagem instalada dessa forma segue todos os parametros de criação de um script de instalação,o que quer dizer que caso algum programa tenha sido expecificado como para ser compilado para se instalar uma imagem esse programa sera compilado todas as vezes que esta imagem for instalada,caso seja o caso o programa compilado sempre terá o desempenho de um programa de compilação expecífica,que geralmente é maior do que um programa de compilação genérica.
+os arquivos dockerfile também facilitam a modificação de uma imagem caso seja necessário
+
+\subsec{imagem docker}
+uma imagem docker é gerada a partir de um arquivo dockerfile,a diferença principal é que: uma imagem docker é simplesmente baixada e extraida na maquina onde o container docker será executado,de forma que é muito mais facilmente replicada em varias maquinas diferentes do que um arquivo dockerfile.
+sempre os arquivos dockerfile são baseados em uma imagem docker,as imagens chamadas de imagens base,são implementações de sistemas operacionais linux ou windows para rodar em docker,na grande maioria dos contianers docker oficiais são baseados no sistema operacional alpine linux ou no debian,nessa ordem de importancia,ambos sistemas operacionais costumam ser mais leves,entretanto o sistema apline linux é pensado para ser otimizado para o docker,sendo mais leve e mais simples que outros sistemas operacionais,o que faz ser muito importante o conhecimento desse sistema aos que criam arquivos dockerfile.
+as imagens docker são distribuidas de 2 formas,a partir de repositorios como os dos sistemas linux ou a partir de arquivos compactados , sendo os repositorios o método mais utilizado de se distribuir essas imagens,o principal repositorio é o dockerhub,que é o repositório oficial do docker.
+
 
 %\section{docker-compose}
 %\label{sec:docker-compose}
@@ -524,9 +544,6 @@ o ELK foi utilizado sem nenhum dos seus varios plugins de processamento de infor
 os dados inseridos pela biblioteca \myref{subsec}{loggingSystem} foram inseridos de forma separada,onde as informações do \myref{sec}{daemon de monitoramento} foram inseridas em uma porta expecífica e os dados filtrados,para melhor tratar a exibição das informações,e o restante dos logs,sejam de informações e exceção ou outros,inseridos em uma outra porta onde eram aceitos quaisquer tipos de dados que não foram filtrados para a primeira porta
 
 
-
-%\section{portainer}
-%\label{sec:portainer}
 \sec{portainer}
 portainer é um painel de administração do docker no qual simplifica muito a administração e configuração de varias coisas mais complexas do docker,inclusive facilitando muito a definição de uso de hardware que será usado por cada container e facilitando o backup dos volumes,possibilitando inclusive o download de backups dos volumes diretamente do navegador em formato de arquivo tar.gz,facilitando também a recriação dos containers para atualização deles para versões mais novas,essa ferramenta alem de tudo é muito simples de ser instalada,visto que roda diretamente de dentro de um contaienr docker multi arquitetura,sendo assim o mesmo comando de instalação funciona em qualquer arquitetura disponivel para o container.
 o portainer também consegue unificar a administração dos diversos servidores utilizados durante o desenvolvimento e testes,sendo necessário apenas instalar o portainer em apenas um dos servidores,todas as outras maquinas só foram necessárias ativar a conexão remota pelo docker socket,isso faz com que o monitoramento de logs,uso de hardware e outros possa ser feito por alto diretamente pelo navegador,mas esse monitoramento não pode ser logado por isso foi preferido seguir o metodo descrito no \myref{sec}{containers docker}.
@@ -545,6 +562,54 @@ a biblioteca psutil é compilada em c,uma biblioteca para monitoramento de hardw
 %\chapter{Trabalhos Relacionados}
 %\label{ch: trabalhos relacionados}
 \ch{Trabalhos Relacionados}
+
+\sec{A Comparison of Database Performance of MariaDB and MySQL with OLTP Workload}
+foram usados varios tipos de bancos de dados alem do postgree e do maria db para a comparação de performance,foram monitorados cpu e memoria ram
+durante os testes foi usado um hypervisor chamado xen que é opensource
+as maquinas usadas foram amd64 com processadores xen e 4 gb de ram
+foi usada exatamente aa mesma extrutura de bd em todos,e ela esta representada no artigo
+existe um grafico do uso de hardware do mariadb e mysql,mas não de outros bd
+mariadb e mysql foram mto proximos em relação ao desempenho no 1 teste
+no 2 teste mariadb foi ligeiramente mais pesado em relação a cpu que mysql
+
+\sec{Automatisation de Docker Swarm sur SoCs ARM avec support MPI et Analyse des Performances}
+é uma analize de desempenho de docker swarm em soc arm 
+foi usado mpi como base para os aplicativos usados,o sistema base dos containers é alpine linux .
+foi usado um ambiente onde uma ferramenta externa configura o ambiente mpi para processamento.isso foi usado para automatizar a implantação e monitoramento do docker swarm 
+uma das ferramentas é uma gambiarra para simular o monitoramento do swarm de forma externa ao docker
+o método usado para experimentar a plataforma virtualizada foi o wrf,que é um método de previsão do tempo
+foram usados o rasp 2 e 3 , nano pi neo,ntc chip e banana pi
+o ganho de desempenho de execução entre múltiplos nucleos é maior que o ganho de desempenho de multiplas maquinas,a porcentagem de ganho entre usar todos os nucleos do rasp é de 71%,mas ao se usar processamento dentro do swarm a aceleração é de 17% de 1 a 2 maquinas e de 2% de 2 a 3 maquinas,isso provavelmente se deve a baixa velocidade de comunicação entre os rasp,isso devido ao proprio soc dele.
+levando em conta o custo,para essa aplicação o uso de soc é viável,já que o wrf consegue apresentar resultados básicos diariamente ou até de hora em hora.
+o desempenho multicore de apenas uma maquina é quase o mesmo que o de 2 maquinas com multicore em paralelo
+
+\sec{a comparative	study of the effects of parallelization  on arm and intel based platforms}
+ja no abstract ele descreve o mesmo cenário que eu quero por no tcc: cada vez mais se usa processadores arm para fazer o que só se fazia em amd64
+o artigo explica múltiplos métodos de paralelização que são utilizados por ele para realizar os testes,assim como as diferenças das implementações deles entre intel e arm
+no processador arm é impossivel usar a gpu para os testes,devido ao sistema operacional usado não ter drivers que disponibilizassem esse uso
+também explica como funcionam os metodos de monitoramento energeticos da plataforma intel e arm usadas
+alem dos medidores internos do cpu é usado um wattímetro
+as medições de consumo energetico internos do cpu eram ativadas por uma função rodando dentro do próprio cpu 
+varias das aplicações foram otimizadas para que funcionassem da melhor forma possivel em cada cpu,de forma que ma otimização não interferisse em nenhum deles
+os algoritimos descritos são algoritimos de processamento de imagem
+ele usa como metrica de desempenho quantos frames foram processados por segundo,juntamente do total de frames e o total de energia gasta,de forma que ele consegue calcular aproximadamente o total de energia gasta para processar cada frame,sendo assim ele consegue saber o total de energia gasto pela função do codigo
+no método serial,que é o único exatamente igual em ambos, existe uma diferença bem sutil,mas com maior eficiencia energetica por parte do processador arm
+usando um dos varios kernels diferentes,existe uma velocidade de processamento exponencialmente maior por parte da intel que por parte do arm no melhor caso,no pior caso a velocidade por parte da intel é de 10 vezes maior que do arm
+o resultado é que o fps/joule é maior no intel que no arm nos melhores casos de cada kernel,mas essa diferença é bem pouca em um dos kernels,e absurda em outro
+
+\sec{KVM, Xen and Docker: a performance analysis for ARM based NFV and Cloud computing }
+começa falando as vantagens da arquitetura arm
+explica o que são os hypervisors e as diferenças do peso a nivel de camada de hardware entre kvm,xen e docker em arm
+imagem ilustrativa dessa diferença é bem util
+os testes de desempenho são feitos em com softwares que simulam uso de servidor,são algoritimos de benchmark
+
+\sec{The Raspberry Pi: A Platform for Replicable Performance Benchmarks?}
+mostra as vantagens do uso do raspberry pi para benchmark,que é fácil de replicar usando ssh e raspibian
+mostra as diferenças de resultados entre os diferentes rasp usados nos testes,os dados mostram que os resultados são bem aproximados ,mas não são os mesmos resultados
+
+\sec{HS06 Benchmark for an ARM Server}
+se resume em um benchmark e analize de um servidor de arquitetura arm,esse servidor possui 12 slots para encaixes das placas de soc,cada placa de soc possui 4 cpu ,com 4 nucleos, um pente de ram , 4 portas sata e um conector de porta 10 gbe para cada cpu,cada servidor consome cerca de 300w de energia
+o consumo energetico desse servidor entre os analisados é o menor , o mais potente e com mais núcleos por rack
 
 %\chapter{testes}
 %\label{ch: testes}
@@ -676,7 +741,7 @@ primeiramente o algoritimo inicia o container que contém o banco de dados que e
 a outra forma é um pouco mais rapida e eficiente em relação a execução das multiplas maquinas.Isso se dá pelo fato que o processo de inserção é feito de forma paralela,de forma que as inserções de cada banco de dados em todas as maquinas é feito simultaneamente,mas também de forma sequencial,o funcionamento é muito parecido com o da anterior,primeiro é criada uma thread para cada maquina,em cada thread é lido de forma sequencial as operações que serão inseridas,assim que as operações acabam em qualquer uma das threads o container do banco de dados é parado e aguara a outra thread acabar para poder começar o mesmo procedimento para o outro tipo de banco de dados\newline
 a terceira forma é parecida com a segunda,diferente apenas na forma como as operações são executadas,a partir desse metodo as operações são inseridas de forma paralela,sendo assim cada thread de cada maquina possui uma quantidade definida de threads filhas,essas threads filhas executam as operações a partir do que existe numa queue de elementos que quer dizer que uma operação não necessáriamente será executada ,visto que pode depender de uma operação que ainda não foi executada,isso é possivel em alguns casos raros,assim como num ambiente real,onde um funcionario de uma empresa pode editar um elemento ao mesmo tempo que outro edita o mesmo elemento,em ambientes reais existem tratamentos para que isso não ocorra,mas no ambiente desses testes,nenhum tratamento para impedir isso foi feito,exatamente para simbolizar o pior cenário possivel para uma aplicação com comunicação com bancos de dados\newline
 a ultima forma é uma variante da segunda e terceira formas de operação,onde são feitos os testes para cada maquina de forma sequencial, mas a execução das operações é paralela,essa ultima foi pensada para que possam ser testadas alguns ambientes a procura de erros,não foi pensada necessáriamente para o uso no benchmark final\newline
-o software de benchmark por si só não é o bastante para analizar o desempenho das arquiteturas,ele depende do container docker descrito em \myref{sec}{container docker},esse container modificado possui um metodo de monitorar de dentro para fora tudo que acontece dentro dele por meio do \myref{sec}{daemon de monitoramento} \newline
+o software de benchmark por si só não é o bastante para analizar o desempenho das arquiteturas,ele depende do container docker descrito em \myref{sec}{containers docker},esse container modificado possui um metodo de monitorar de dentro para fora tudo que acontece dentro dele por meio do \myref{sec}{daemon de monitoramento} \newline
 
 
 %\section{geração de dados}
