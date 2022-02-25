@@ -512,15 +512,18 @@ os tipos de bancos de dados analizados são os bancos de dados sql relacional qu
 \sec{docker}
 docker é um sistema de virtualização de maquinas que busca ser mais simples de ser gerenciado e entregar mais desempenho do hardware real da maquina que está sendo usada.o docker busca executar as chamadas de seus ambientes virtualizados ,chamados de containers,ao nivel do sistema operacional,logo a cima do kernel do sistma,isso faz com que seja possivel dedicar parte dos hardwares da maquina real para um container,sendo possivel dentre outras coisas dividir de forma fixa porções do hardware ,como definir limite de ram usado ou quantidade de nucleos de cpu usados,isso foi aplicado nos testes realizados,para padronizar as expecificações tecnicas dos container usados nos testes,como descrito em \myref{sec}{ontainers docker},outra das funcionalidades do docker é a implementação de volumes,que é a fora de isolar as pastas do container e manter elas mesmo caso o container seja reinstalado para realizar atualização,essas atualizações são feitas por meio do metodo de instalação dos containers docker,as imagens,as imagens são feitas sequindo o modelo de snapshot,onde cada imagem não tem nenhum programa ou biblioteca atualizada a menos que seja deliberadamente feito pelo proprio programa ou pelo administrador do container durante sua execução,mas esse segundo geralmente não é feito,visto que os containers quando precisam ser atualizados é preferivel usar a atualização por imagem do que executando comandos por dentro dos containers rodando,um grande motivo disso é o docker-compose,como é descrito no \myref{sec}{docker-compose}.
 o docker foi desenvolvido a pedido da google usando a linguagem go,também desenvolvida por ela,ele foi desenvolvido visando a simplificação da gerencia dos clusters de processamento da google,que utilizam dezenas de computadores mais fracos para fazer o processamento , de forma que é mais barato para compor o ambiente para o processamento tão potente quanto se comprasse varias armas muito mais caras,alem disso o docker também facilita a manutenção devido a facil reimplementação de um container caso a maquina tenha algum problema,como visto em situações que ocorreram durante o periodo do desenvolvimento da aplicação,para se reinstalar o stack de aplicações de monitoramento de dados do ELK \myref{sec}{elasticsearch monitoring stack} foi necessário apenas em torno de 2 horas,incluindo completa formatação do servidor onde o stack estava rodando,instalação do stack e completa configuração do mesmo,isso caso não fosse feito com docker facilmente levaria 1 dia para a completa reinstalação e reconfiguração do stack,isso porque o stack foi instalado facilmente com o docker-compose e todos os volumes contendo os arquivos de configuração possuiam backup,e a restauração de backups de volumes é extremamente simplificada,ainda mais utilizando a ferramenta portainer \myref{sec}{portainer} com o docker-sock,o docker-sock é um metodo de controle remoto do docker,utilizando o socket todas as configurações e gerenciamentos são feitos da mesma forma como se que se tivesse sendo feito diretamente na maquina que o docker está rodando,isso faz com que o docker seja muito simples de unificar e replicar o mesmo comando em diversas maquinas diferentes.
+\cite{dockerdoc}
 
 \subsec{container docker}
 um container docker roda a nivel de kernel, o que quer dizer que qualquer dispositivo ou dado disponivel na maquina real do usuario pode ser acessivel por um container docker,alem disso ele possui maior eficiencia de uso de ram e de cpu em comparação a maquinas virtuais ou outros metodos de virtualização, entretanto este método faz com que seja mais complicado de se utilizar de se acessar interface grafica de um container do que em uma maquina virtual,apesar de ainda ser possivel.
 uma das maiores utilizações dos containers docker é em ambientes de servidor,os containers docker são imaginados para isolar programas do sistema operacional da maquina real,de forma a caso algum problema ocorra com o programa,isso não afete a maquina real do usuario, em muitas situações são utilizados também como sistemas de desenvolvimento virtualizados ,de forma a sempre ser fácil de se replicar e de corrigir problemas durante a criação de um programa.
 containers docker também costumam ser mais faceis e rapidos de se implementar do que maquinas virtuais,visto que containers utilizam imagens docker para sua criação,que são geradas a partir de arquivos dockerfile ou a partir de um repositório
 
+
 \subsec{dockerfile}
 os arquivos dockerfile são mais leves de se transportar,mas demoram mais pra serem instaladas,visto que uma imagem instalada dessa forma segue todos os parametros de criação de um script de instalação,o que quer dizer que caso algum programa tenha sido expecificado como para ser compilado para se instalar uma imagem esse programa sera compilado todas as vezes que esta imagem for instalada,caso seja o caso o programa compilado sempre terá o desempenho de um programa de compilação expecífica,que geralmente é maior do que um programa de compilação genérica.
 os arquivos dockerfile também facilitam a modificação de uma imagem caso seja necessário
+
 
 \subsec{imagem docker}
 uma imagem docker é gerada a partir de um arquivo dockerfile,a diferença principal é que: uma imagem docker é simplesmente baixada e extraida na maquina onde o container docker será executado,de forma que é muito mais facilmente replicada em varias maquinas diferentes do que um arquivo dockerfile.
@@ -531,12 +534,14 @@ as imagens docker são distribuidas de 2 formas,a partir de repositorios como os
 %\section{docker-compose}
 %\label{sec:docker-compose}
 \sec{docker-compose}
+\cite{dockercomposedoc}
 
 %\section{elasticsearch monitoring stack}
 %\label{sec:elasticsearch monitoring stack}
 \sec{elasticsearch monitoring stack}
 esse é um conhecido metodo opensource de monitoramento de logs,esse sistema se baseia em 3 programas Elasticsearch,um indexador e processador de logs,Logstash um receptor e monitorador de logs e Kibana uma interface web para se monitorar e trabalhar esses dados,por isso é comumente conhecido como ELK,esses programas são baseados em java e sendo assim consomem uma quantidade donsideravel de memória ram,por isso foram colocados em uma maquina dedicada a isso,essa maquina recebe os logs de todas as etapas da aplicação.
 o ELK foi utilizado sem nenhum dos seus varios plugins de processamento de informações sendo utilizado apenas o kibana para filtrar os resultados encontrados e gerar os graficos exibidos nesse texto.todos os dados inseridos foram inseridos de uma dessas duas formas:
+\cite{elk}
 \begin{itemize}
  \item inseridos via interface web usando arquivos json diretamente no kibana
  \item inseridos utilizando a \myref{subsec}{loggingSystem}
@@ -547,17 +552,20 @@ os dados inseridos pela biblioteca \myref{subsec}{loggingSystem} foram inseridos
 \sec{portainer}
 portainer é um painel de administração do docker no qual simplifica muito a administração e configuração de varias coisas mais complexas do docker,inclusive facilitando muito a definição de uso de hardware que será usado por cada container e facilitando o backup dos volumes,possibilitando inclusive o download de backups dos volumes diretamente do navegador em formato de arquivo tar.gz,facilitando também a recriação dos containers para atualização deles para versões mais novas,essa ferramenta alem de tudo é muito simples de ser instalada,visto que roda diretamente de dentro de um contaienr docker multi arquitetura,sendo assim o mesmo comando de instalação funciona em qualquer arquitetura disponivel para o container.
 o portainer também consegue unificar a administração dos diversos servidores utilizados durante o desenvolvimento e testes,sendo necessário apenas instalar o portainer em apenas um dos servidores,todas as outras maquinas só foram necessárias ativar a conexão remota pelo docker socket,isso faz com que o monitoramento de logs,uso de hardware e outros possa ser feito por alto diretamente pelo navegador,mas esse monitoramento não pode ser logado por isso foi preferido seguir o metodo descrito no \myref{sec}{containers docker}.
+\cite{portainer}
 
 %\section{biblioteca faker}
 %\label{sec:biblioteca faker}
 \sec{biblioteca faker}
 A biblioteca faker é uma biblioteca conhecida para a geração de mock data, que são dados gerados randomicamente para testar a capacidade de um algoritmo em lidar com dados. Essa biblioteca é comumente utilizada na etapa de testes de um algoritmo, seja para testes de segurança, para proteger de bots de criação de contas ou algo semelhante. É também utilizado para testes de estresse, quanto para qualquer tipo de teste que dependa de dados "realisticos".\newline
 Essa biblioteca foi selecionada pois é de fácil utilização, possui documentação abrangente e de fácil compreenção e suporte para múltiplos idiomas. Apesar da biblioteca apenas suportar todos os seus tipos de geração mais completos na localização dos EUA, dentre esses está um tipo que corresponde a todo um perfil de usuário, contendo desde endereço até a senha fraca ou forte. Para propósitos de testes, foram gerados apenas dados na localização do Brasil.\newline
+\cite{faker}
 
 %\section{biblioteca psutil}
 %\label{sec:biblioteca psutil}
 \sec{biblioteca psutil}
 a biblioteca psutil é compilada em c,uma biblioteca para monitoramento de hardware,ela consegue monitorar diversos tipos de informações do hardware,como informações detalhadas de uso de cpu,ram,processos,disco e varios outros dados completos.a biblioteca consegue listar varios dados das formas mais completas possiveis.a biblioteca é a mais utilizada e mais importante das bibliotecas de monitoramento de hardware da linguagem python.a psutil é de muito simples utilização e documentação muito bem feita
+\cite{psutil}
 
 %\chapter{Trabalhos Relacionados}
 %\label{ch: trabalhos relacionados}
@@ -571,6 +579,7 @@ foi usada exatamente aa mesma extrutura de bd em todos,e ela esta representada n
 existe um grafico do uso de hardware do mariadb e mysql,mas não de outros bd
 mariadb e mysql foram mto proximos em relação ao desempenho no 1 teste
 no 2 teste mariadb foi ligeiramente mais pesado em relação a cpu que mysql
+\cite{MariaDBMySQLOLTP}
 
 \sec{Automatisation de Docker Swarm sur SoCs ARM avec support MPI et Analyse des Performances}
 é uma analize de desempenho de docker swarm em soc arm 
@@ -582,8 +591,9 @@ foram usados o rasp 2 e 3 , nano pi neo,ntc chip e banana pi
 o ganho de desempenho de execução entre múltiplos nucleos é maior que o ganho de desempenho de multiplas maquinas,a porcentagem de ganho entre usar todos os nucleos do rasp é de 71%,mas ao se usar processamento dentro do swarm a aceleração é de 17% de 1 a 2 maquinas e de 2% de 2 a 3 maquinas,isso provavelmente se deve a baixa velocidade de comunicação entre os rasp,isso devido ao proprio soc dele.
 levando em conta o custo,para essa aplicação o uso de soc é viável,já que o wrf consegue apresentar resultados básicos diariamente ou até de hora em hora.
 o desempenho multicore de apenas uma maquina é quase o mesmo que o de 2 maquinas com multicore em paralelo
+\cite{DockerSwarmsocmpi}
 
-\sec{a comparative	study of the effects of parallelization  on arm and intel based platforms}
+\sec{a comparative study of the effects of parallelization  on arm and intel based platforms}
 ja no abstract ele descreve o mesmo cenário que eu quero por no tcc: cada vez mais se usa processadores arm para fazer o que só se fazia em amd64
 o artigo explica múltiplos métodos de paralelização que são utilizados por ele para realizar os testes,assim como as diferenças das implementações deles entre intel e arm
 no processador arm é impossivel usar a gpu para os testes,devido ao sistema operacional usado não ter drivers que disponibilizassem esse uso
@@ -596,31 +606,35 @@ ele usa como metrica de desempenho quantos frames foram processados por segundo,
 no método serial,que é o único exatamente igual em ambos, existe uma diferença bem sutil,mas com maior eficiencia energetica por parte do processador arm
 usando um dos varios kernels diferentes,existe uma velocidade de processamento exponencialmente maior por parte da intel que por parte do arm no melhor caso,no pior caso a velocidade por parte da intel é de 10 vezes maior que do arm
 o resultado é que o fps/joule é maior no intel que no arm nos melhores casos de cada kernel,mas essa diferença é bem pouca em um dos kernels,e absurda em outro
+\cite{armvsintel}
 
 \sec{KVM, Xen and Docker: a performance analysis for ARM based NFV and Cloud computing }
 começa falando as vantagens da arquitetura arm
 explica o que são os hypervisors e as diferenças do peso a nivel de camada de hardware entre kvm,xen e docker em arm
 imagem ilustrativa dessa diferença é bem util
 os testes de desempenho são feitos em com softwares que simulam uso de servidor,são algoritimos de benchmark
+\cite{KVMXenDocker}
 
 \sec{The Raspberry Pi: A Platform for Replicable Performance Benchmarks?}
 mostra as vantagens do uso do raspberry pi para benchmark,que é fácil de replicar usando ssh e raspibian
 mostra as diferenças de resultados entre os diferentes rasp usados nos testes,os dados mostram que os resultados são bem aproximados ,mas não são os mesmos resultados
+\cite{rpiplatformreplicable}
 
 \sec{HS06 Benchmark for an ARM Server}
 se resume em um benchmark e analize de um servidor de arquitetura arm,esse servidor possui 12 slots para encaixes das placas de soc,cada placa de soc possui 4 cpu ,com 4 nucleos, um pente de ram , 4 portas sata e um conector de porta 10 gbe para cada cpu,cada servidor consome cerca de 300w de energia
 o consumo energetico desse servidor entre os analisados é o menor , o mais potente e com mais núcleos por rack
+\cite{hs06}
 
 %\chapter{testes}
 %\label{ch: testes}
 \ch{testes}
-Os testes foram realizados utilizando um Orangepi PC+ e um notebook .
-O Orange Pi é um SBC ARM baseado no processador allwinner h3 com 3 usb 2.0 , 1GB de memória RAM DDR3, uma porta de rede 10/100 e wifi bgn. Essa configuração é relativamente antiga e seu processador é um 4-core de 1.3ghz no clock máximo,
+Os testes foram realizados utilizando um Orangepi PC+ \cite{opipc} e um notebook .
+O Orange Pi é um SBC ARM baseado no processador allwinner h3 \cite{h3} com 3 usb 2.0 , 1GB de memória RAM DDR3, uma porta de rede 10/100 e wifi bgn. Essa configuração é relativamente antiga e seu processador é um 4-core de 1.3ghz no clock máximo,
 é um processador relativamente bom mas o conjunto de especificações não é bom o bastante para substituir um computador atual,
 devido a sua limitação de memória ram e de capacidade gráfica, mas consegue funcionar de forma satisfatória como servidor doméstico ,
 visto que seu processador é bom o bastante para operações simplificadas e poucos acessos,mas quando se tratam de muitos acessos ele pode não ser potente o bastante para aguentar.
 
-O notebook é um Lenovo G405,com um processador AMD E1-2100 APU,um dualcore com clock máximo de 1.0ghz com 2 gb de memória ram ddr3, 1 usb 2.0,2 usb 3.0, 
+O notebook é um Lenovo G405\cite{G405},com um processador AMD E1-2100 \cite{E1} APU,um dualcore com clock máximo de 1.0ghz com 2 gb de memória ram ddr3, 1 usb 2.0,2 usb 3.0, 
 porta de rede gigabit e 2 portas sata3,entretanto essas portas sata não serão usadas já que o propósito é manter as 2 maquinas o mais próximas em relação a hardware possivel,
 resultando assim na mais próxima velocidade e expecificações possiveis,o sistema operacional por outro lado,
 no orange pi ficou armazenada na sua memória interna emmc e no computador amd num hd 2.5`` samsung sata3 de 500gb,a memória onde o sistema operacional do orange pi está armazenadas está longe de ser rápida,
@@ -683,7 +697,8 @@ essa foi a parte que demandou mais testes,estudos e desenvolvimento dos testes i
 %\label{sec:testes de eficiencia}
 \sec{testes de eficiencia}
 esses testes não apenas levam em conta o tempo que foi gasto para concluir a operação,mas também a forma como elas foram concluidas,
-isso quer dizer que o tempo é um parametro para a sua avaliação,mas também a quantidade de falhas apresentadas,quantidade de cpu gasto e quantidade de interação do operador do algoritimo para que ele funcione como deveria
+isso quer dizer que o tempo é um parametro para a sua avaliação,mas também a quantidade de falhas apresentadas,
+quantidade de cpu gasto e quantidade de interação do operador do algoritimo para que ele funcione como deveria
 
 %\subsection{teste de eficiencia de operações paralelas}
 %\label{subsec:teste de eficiencia de operações paralelas}
@@ -741,7 +756,7 @@ mas apenas para fins de simplificação no momento do uso foi criada essa biblio
 %\subsection{loggingSystem}
 %\label{subsec:loggingSystem}
 \subsec{loggingSystem}
-essa biblioteca é a responsável por toda a gerencia e logs e por todo o monitoramento do \myref{subsec}{monitorContainer},essa biblioteca basicamente é um complemento da biblioteca padrão de logs do python,
+essa biblioteca é a responsável por toda a gerencia e logs e por todo o monitoramento do \myref{subsec}{monitorContainer},essa biblioteca basicamente é um complemento da biblioteca padrão de logs do python \cite{logging},
 que tem uma implementação de comunicação com os servidores logstash,a biblioteca de forma inteligente verifica se os parametros de comunicação com o logstash estão funcionais,
 senão automaticamente salva todos os logs em um arquivo .log cujo nome foi informado durante a instancia do objeto da classe,
 a classe apenas consegue fazer essa verificação durante sua instancia,caso após isso a conexão seja perdida os logs não são enviados a lugar algum.
@@ -756,7 +771,7 @@ sendo assim permitindo que um tratamento de erro mais complexo seja possivel sem
 %\subsection{paralelLib}
 %\label{subsec:paralelLib}
 \subsec{paralelLib}
-essa biblioteca possui 2 implementações diferentes de paralelização,utilizando a classe threading e a classe multiprocessing,a classe threading utiliza threads para a paralelização de execuções,
+essa biblioteca possui 2 implementações diferentes de paralelização,utilizando a classe threading \cite{threading} e a classe multiprocessing \cite{multiprocessing},a classe threading utiliza threads para a paralelização de execuções,
 esse método foi inicialmente utilizado por ser de mais simples implementação e mais simples monitoramentoda execução,entretantodevido as limitações de segurança dessa classe foi escolhida uma implementação utilizando a classe multiprocessing,
 onde essa classe cria um grupo de subprocessos para o codigo que irão ser responsáveis pela execução do algoritimo selecionado.
 ambas as classes implementadas,a derivada de threading e a derivada de multiprocessing foram feitas de formas análogas e de simples substituição em codigo de uma para a outra de acordo com a necessidade,sendo assim funcionam muito parecidas.
@@ -849,7 +864,8 @@ mas também de forma sequencial,o funcionamento é muito parecido com o da anter
 em cada thread é lido de forma sequencial as operações que serão inseridas,
 assim que as operações acabam em qualquer uma das threads o container do banco de dados é parado e aguara a outra thread acabar para poder começar o mesmo procedimento para o outro tipo de banco de dados\newline
 a terceira forma é parecida com a segunda,diferente apenas na forma como as operações são executadas,a partir desse metodo as operações são inseridas de forma paralela,
-sendo assim cada thread de cada maquina possui uma quantidade definida de threads filhas,essas threads filhas executam as operações a partir do que existe numa queue de elementos que quer dizer que uma operação não necessáriamente será executada ,
+sendo assim cada thread de cada maquina possui uma quantidade definida de threads filhas,
+essas threads filhas executam as operações a partir do que existe numa queue de elementos que quer dizer que uma operação não necessáriamente será executada ,
 visto que pode depender de uma operação que ainda não foi executada,isso é possivel em alguns casos raros,
 assim como num ambiente real,onde um funcionario de uma empresa pode editar um elemento ao mesmo tempo que outro edita o mesmo elemento,
 em ambientes reais existem tratamentos para que isso não ocorra,
@@ -935,7 +951,7 @@ O tipo de associação vai pegar esse valor e usar uma função de seleção ran
 caso não exista algum elemento dessa tabela, por um tratamento de erro é gerado um elemento para ela, permitindo o funcionamento da associação no novo elemento que foi criado.\newline
 Os únicos dados que não são passados para o algoritmo funcionar são o país que deve ser gerado os dados, de acordo com \myref{sec}{biblioteca faker},
 e a quantidade de dados que devem ser geradas, ambos sendo necessários de serem inseridos na chamada da função.
-Os outros dados relevantes referentes ao funcionamento da chamada da função estão em {sec}{geração de dados}
+Os outros dados relevantes referentes ao funcionamento da chamada da função estão em \myref{sec}{geração de dados}
 
 %\subsection{sqlite}
 %\label{subsec:sqlite}
