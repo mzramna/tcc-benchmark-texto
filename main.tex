@@ -122,6 +122,7 @@
 %		bookmarksdepth=4
 %}
 \makeatother
+\graphicspath{ {./imagens/} }
 % --- 
 
 % --- 
@@ -671,9 +672,18 @@ o maior diferencial entre os testes da arquitetura arm e x86 foi que na arquitet
 foi necessário utilizar um hd ao invés de um ssd e como dito em \myref{sec}{geração de dados} isso impacta consideravelmente na velocidade da geração dos dados
 
 
-%\subsection{teste de tempo de inserção no bd}
-%\label{subsec:teste de tempo de inserção no bd}
-\subsec{teste de tempo de inserção no bd}
+\subsec{teste de tempo de operação de inserção no bd}
+este teste foi proposto para ser um teste de dois tipos,primiro um teste de operações sem falha,segundo um teste de operações de inserção para bancos de dado mais utilizados para esse propósito,
+dessa forma fica mais facil de determinar o cenário onde o banco de dados lida melhor com grande quantidade de inserções como em ambientes de registro de atividades,registros de logs ou de cadastros variados.
+para esse propósito foi utilizada uma variação do benchmark de criação de bd,mas dessa vez a inserção foi fracionada,uma constante identificada nos resultados desse teste é que quanto mais dados já haviam sido cadastrados mais tempo era gasto para se cadastrar mais dados,isso foi valido para ambos os bancos de dados em ambas as arquiteturas.
+outra constante foi que considerando os valores encontrados de tempo,sempre o postgres terminou mais rapidamente e no arm a diferença entre o postgres e o arm é grande,em raros casos essa diferença é pequena,mas sempre existe uma diferença em que o mariadb é mais demorado que o postgres.
+\begin{figure}
+  \includegraphics{valores tempo benchmark inserção fracionada.jpg}
+  \caption{valores tempo benchmark inserção fracionada}
+  \label{fig:resultados insercao fracionada}
+\end{figure}
+
+\subsec{teste de tempo de operações variadas no bd}
 após a confirmação da funcionalidade de forma satisfatória da geração do sqlite foi iniciado o processo de interação com o banco de dados,
 esse processo foi dividido em algumas etapas,primeiramente para verificar se a operação funcionava corretamente,essa etapa foi feita seguindo os testes de funcionalidade ja descritos,
 onde uma pequena quantidade de operações era gerada,usando a geração de sqlite,em ambos os bancos de dados ao mesmo tempo,após essa etapa de confirmação de funcionalidade não foi feito um teste de desempenho,

@@ -1,55 +1,56 @@
 \changetocdepth {3}
 \babel@toc {english}{}
-\contentsline {chapter}{\textbf {Introdução}}{2}{chapter*.13}%
-\contentsline {chapter}{\chapternumberline {1}fundamentacao teorica}{4}{chapter.1}%
-\contentsline {section}{\numberline {1.1}virtualização}{4}{section.1.1}%
-\contentsline {section}{\numberline {1.2}maquina virtual}{4}{section.1.2}%
-\contentsline {section}{\numberline {1.3}arquiteturas}{4}{section.1.3}%
-\contentsline {section}{\numberline {1.4}bancos de dados}{8}{section.1.4}%
-\contentsline {section}{\numberline {1.5}docker}{9}{section.1.5}%
-\contentsline {subsection}{\numberline {1.5.1}container docker}{10}{subsection.1.5.1}%
-\contentsline {subsection}{\numberline {1.5.2}dockerfile}{10}{subsection.1.5.2}%
-\contentsline {subsection}{\numberline {1.5.3}imagem docker}{11}{subsection.1.5.3}%
-\contentsline {section}{\numberline {1.6}docker-compose}{11}{section.1.6}%
-\contentsline {section}{\numberline {1.7}elasticsearch monitoring stack}{11}{section.1.7}%
-\contentsline {section}{\numberline {1.8}portainer}{12}{section.1.8}%
-\contentsline {section}{\numberline {1.9}biblioteca faker}{12}{section.1.9}%
-\contentsline {section}{\numberline {1.10}biblioteca psutil}{13}{section.1.10}%
-\contentsline {chapter}{\chapternumberline {2}Trabalhos Relacionados}{14}{chapter.2}%
-\contentsline {section}{\numberline {2.1}A Comparison of Database Performance of MariaDB and MySQL with OLTP Workload}{14}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Automatisation de Docker Swarm sur SoCs ARM avec support MPI et Analyse des Performances}{14}{section.2.2}%
-\contentsline {section}{\numberline {2.3}a comparative study of the effects of parallelization on arm and intel based platforms}{15}{section.2.3}%
-\contentsline {section}{\numberline {2.4}KVM, Xen and Docker: a performance analysis for ARM based NFV and Cloud computing }{15}{section.2.4}%
-\contentsline {section}{\numberline {2.5}The Raspberry Pi: A Platform for Replicable Performance Benchmarks?}{16}{section.2.5}%
-\contentsline {section}{\numberline {2.6}HS06 Benchmark for an ARM Server}{16}{section.2.6}%
-\contentsline {chapter}{\chapternumberline {3}testes}{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}testes de tempo}{18}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}teste de tempo de criação do bd}{18}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}teste de tempo de inserção no bd}{19}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}teste de tempo de operações paralelas}{20}{subsection.3.1.3}%
-\contentsline {section}{\numberline {3.2}testes de eficiencia}{20}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}teste de eficiencia de operações paralelas}{20}{subsection.3.2.1}%
-\contentsline {chapter}{\chapternumberline {4}Metodologia}{22}{chapter.4}%
-\contentsline {section}{\numberline {4.1}bibliotecas criadas}{22}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}loggingSystem}{23}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}paralelLib}{23}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}monitorContainer}{25}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}gerenciadosDeBD}{26}{subsection.4.1.4}%
-\contentsline {subsection}{\numberline {4.1.5}geradorDeSql}{27}{subsection.4.1.5}%
-\contentsline {section}{\numberline {4.2}software de benchmark}{27}{section.4.2}%
-\contentsline {section}{\numberline {4.3}geração de dados}{28}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}tipos de dados gerados}{29}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}alimentação do algoritmo}{30}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}sqlite}{31}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}containers docker}{32}{section.4.4}%
-\contentsline {section}{\numberline {4.5}daemon de monitoramento}{33}{section.4.5}%
-\contentsline {section}{\numberline {4.6}ambiente de desenvolvimento}{33}{section.4.6}%
-\contentsline {chapter}{\chapternumberline {5}problemas e erros}{35}{chapter.5}%
-\contentsline {chapter}{\chapternumberline {6}Resultados}{37}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Resultados do Método}{37}{section.6.1}%
-\contentsline {chapter}{\chapternumberline {7}Conclusão}{38}{chapter.7}%
-\contentsline {chapter}{Bibliography}{39}{chapter*.14}%
+\contentsline {chapter}{\textbf {Introdução}}{3}{chapter*.13}%
+\contentsline {chapter}{\chapternumberline {1}fundamentacao teorica}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}virtualização}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}maquina virtual}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}arquiteturas}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}bancos de dados}{9}{section.1.4}%
+\contentsline {section}{\numberline {1.5}docker}{10}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}container docker}{11}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}dockerfile}{11}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}imagem docker}{12}{subsection.1.5.3}%
+\contentsline {section}{\numberline {1.6}docker-compose}{12}{section.1.6}%
+\contentsline {section}{\numberline {1.7}elasticsearch monitoring stack}{12}{section.1.7}%
+\contentsline {section}{\numberline {1.8}portainer}{13}{section.1.8}%
+\contentsline {section}{\numberline {1.9}biblioteca faker}{13}{section.1.9}%
+\contentsline {section}{\numberline {1.10}biblioteca psutil}{14}{section.1.10}%
+\contentsline {chapter}{\chapternumberline {2}Trabalhos Relacionados}{15}{chapter.2}%
+\contentsline {section}{\numberline {2.1}A Comparison of Database Performance of MariaDB and MySQL with OLTP Workload}{15}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Automatisation de Docker Swarm sur SoCs ARM avec support MPI et Analyse des Performances}{15}{section.2.2}%
+\contentsline {section}{\numberline {2.3}a comparative study of the effects of parallelization on arm and intel based platforms}{16}{section.2.3}%
+\contentsline {section}{\numberline {2.4}KVM, Xen and Docker: a performance analysis for ARM based NFV and Cloud computing }{16}{section.2.4}%
+\contentsline {section}{\numberline {2.5}The Raspberry Pi: A Platform for Replicable Performance Benchmarks?}{17}{section.2.5}%
+\contentsline {section}{\numberline {2.6}HS06 Benchmark for an ARM Server}{17}{section.2.6}%
+\contentsline {chapter}{\chapternumberline {3}testes}{18}{chapter.3}%
+\contentsline {section}{\numberline {3.1}testes de tempo}{19}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}teste de tempo de criação do bd}{19}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}teste de tempo de operação de inserção no bd}{20}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}teste de tempo de operações variadas no bd}{21}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}teste de tempo de operações paralelas}{21}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}testes de eficiencia}{22}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}teste de eficiencia de operações paralelas}{22}{subsection.3.2.1}%
+\contentsline {chapter}{\chapternumberline {4}Metodologia}{24}{chapter.4}%
+\contentsline {section}{\numberline {4.1}bibliotecas criadas}{24}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}loggingSystem}{25}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}paralelLib}{25}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}monitorContainer}{27}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}gerenciadosDeBD}{28}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.5}geradorDeSql}{29}{subsection.4.1.5}%
+\contentsline {section}{\numberline {4.2}software de benchmark}{29}{section.4.2}%
+\contentsline {section}{\numberline {4.3}geração de dados}{30}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}tipos de dados gerados}{31}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}alimentação do algoritmo}{32}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}sqlite}{33}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}containers docker}{34}{section.4.4}%
+\contentsline {section}{\numberline {4.5}daemon de monitoramento}{35}{section.4.5}%
+\contentsline {section}{\numberline {4.6}ambiente de desenvolvimento}{35}{section.4.6}%
+\contentsline {chapter}{\chapternumberline {5}problemas e erros}{37}{chapter.5}%
+\contentsline {chapter}{\chapternumberline {6}Resultados}{39}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Resultados do Método}{39}{section.6.1}%
+\contentsline {chapter}{\chapternumberline {7}Conclusão}{40}{chapter.7}%
+\contentsline {chapter}{Bibliography}{41}{chapter*.14}%
 \cftinsert {AAA}
 \renewcommand *{\cftappendixname }{ANNEX \space }
-\contentsline {part}{Annex}{40}{section*.15}%
-\contentsline {appendix}{\chapternumberline {A}logs teste de tempo}{41}{appendix.anexochapback.1}%
+\contentsline {part}{Annex}{42}{section*.15}%
+\contentsline {appendix}{\chapternumberline {A}logs teste de tempo}{43}{appendix.anexochapback.1}%
