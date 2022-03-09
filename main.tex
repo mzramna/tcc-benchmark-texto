@@ -493,16 +493,14 @@ Existem alguns computadores com processador \myref{sig}{arm} que não são \myre
 
 Como os processadores \myref{sig}{arm} começaram a ficar mais comuns, visto que algumas fabricantes como a Apple e Gigabyte agora oferecem computadores e servidores baseados nessa arquitetura, faz com que seja cada vez mais fácil de se utilizar tal arquitetura por existirem mais consumidores e consequentemente uma oferta maior de programas feitos para serem executados nessa arquitetura. Visto o quanto um computador com processador \myref{sig}{arm} economiza energia para entregar o mesmo poder de processamento de um outro com processador \myref{sig}{x86}, essa diferença pode ser muito benéfica para os vários tipos de empresas que utilizam servidores, já que isso pode significar um impacto considerável no consumo energético da empresa dependendo do quanto ele é utilizado a nível de processamento.\newline
 
-%\section{bancos de dados}
-%\label{sec: bancos de dados}
+
 \sec{bancos de dados}
 Banco de dados é um método de armazenamento de dados de forma estruturada para que as informações sejam fáceis de serem associadas e filtradas. Podem, também, ser armazenadas de forma a economizar espaço de armazenamento, dependendo da otimização do banco de dados além da possibilidade de realizar redundâncias de segurança dos dados. Através dessas características, justifica-se a escolha dos bancos de dados como alvo do benchmark realizado para essa comparação de arquiteturas.
 
 Sistemas de computadores, dos mais diversos tipos, utilizam banco de dados para armazenamento de suas informações. Dessa forma, as informações ficam estruturadas em um formato padrão permitindo um acesso rápido a elas.
 os tipos de bancos de dados analizados são os bancos de dados sql relacional que são os mais genéricos,de forma que podem ser utilizados no máximo de aplicações diferentes possiveis,isso faz com que os bancos de dado sql sejam os melhores para serem simulados,um dos que foi analizado para ser testado foi o mongodb e o oracle,mas o mongodb não é relacional e o da oracle não existe uma versão para \myref{sig}{arm} até o momento que o projeto foi pensado.
 
-%\section{docker}
-%\label{sec:docker}
+
 \sec{docker}
 docker é um sistema de virtualização de maquinas que busca ser mais simples de ser gerenciado e entregar mais desempenho do hardware real da maquina que está sendo usada.o docker busca executar as chamadas de seus ambientes virtualizados ,chamados de containers,ao nivel do sistema operacional,logo a cima do kernel do sistma,isso faz com que seja possivel dedicar parte dos hardwares da maquina real para um container,sendo possivel dentre outras coisas dividir de forma fixa porções do hardware ,como definir limite de ram usado ou quantidade de nucleos de cpu usados,isso foi aplicado nos testes realizados,para padronizar as expecificações tecnicas dos container usados nos testes,como descrito em \myref{sec}{ontainers docker},outra das funcionalidades do docker é a implementação de volumes,que é a fora de isolar as pastas do container e manter elas mesmo caso o container seja reinstalado para realizar atualização,essas atualizações são feitas por meio do metodo de instalação dos containers docker,as imagens,as imagens são feitas sequindo o modelo de snapshot,onde cada imagem não tem nenhum programa ou biblioteca atualizada a menos que seja deliberadamente feito pelo proprio programa ou pelo administrador do container durante sua execução,mas esse segundo geralmente não é feito,visto que os containers quando precisam ser atualizados é preferivel usar a atualização por imagem do que executando comandos por dentro dos containers rodando,um grande motivo disso é o docker-compose,como é descrito no \myref{sec}{docker-compose}.
 o docker foi desenvolvido a pedido da google usando a linguagem go,também desenvolvida por ela,ele foi desenvolvido visando a simplificação da gerencia dos clusters de processamento da google,que utilizam dezenas de computadores mais fracos para fazer o processamento , de forma que é mais barato para compor o ambiente para o processamento tão potente quanto se comprasse varias armas muito mais caras,alem disso o docker também facilita a manutenção devido a facil reimplementação de um container caso a maquina tenha algum problema,como visto em situações que ocorreram durante o periodo do desenvolvimento da aplicação,para se reinstalar o stack de aplicações de monitoramento de dados do ELK \myref{sec}{elasticsearch monitoring stack} foi necessário apenas em torno de 2 horas,incluindo completa formatação do servidor onde o stack estava rodando,instalação do stack e completa configuração do mesmo,isso caso não fosse feito com docker facilmente levaria 1 dia para a completa reinstalação e reconfiguração do stack,isso porque o stack foi instalado facilmente com o docker-compose e todos os volumes contendo os arquivos de configuração possuiam backup,e a restauração de backups de volumes é extremamente simplificada,ainda mais utilizando a ferramenta portainer \myref{sec}{portainer} com o docker-sock,o docker-sock é um metodo de controle remoto do docker,utilizando o socket todas as configurações e gerenciamentos são feitos da mesma forma como se que se tivesse sendo feito diretamente na maquina que o docker está rodando,isso faz com que o docker seja muito simples de unificar e replicar o mesmo comando em diversas maquinas diferentes.
@@ -525,13 +523,14 @@ sempre os arquivos dockerfile são baseados em uma imagem docker,as imagens cham
 as imagens docker são distribuidas de 2 formas,a partir de repositorios como os dos sistemas linux ou a partir de arquivos compactados , sendo os repositorios o método mais utilizado de se distribuir essas imagens,o principal repositorio é o dockerhub,que é o repositório oficial do docker.
 
 
-%\section{docker-compose}
-%\label{sec:docker-compose}
+
 \sec{docker-compose}
 \cite{dockercomposedoc}
+e um metodos de implementação de containers docker,nesse metodo de implementação um arquivo de deploy é criado de forma que seja facilmente replicado,ele é utilizado muitas vezes juntamente com um arquivo de variaveis ambientais .env,esse arquivo contem variaveis para serem utilizadas no deploy do stack de containers,esse arquivo faz com que o mesmo arquivo docker-compose possa ser usado em mais de um ambiente/maquina diferente.
+o docker-compose é implementado num programa a parte que utiliza do framework do docker padrão,sendo assim é basicamente um programa oficial que simplifica o deploy por inserir sempre os comandos pre definidos neles de forma modificada pelo conteudo do arquivo .env .
+o docker-compose foi implementado originalmente junto da versão 0.7.0 do docker,essa foi a primeira versão do docker a permitir a linkagem de containers entre si,sem precisar de exposição das portas para processos 
 
-%\section{elasticsearch monitoring stack}
-%\label{sec:elasticsearch monitoring stack}
+
 \sec{elasticsearch monitoring stack}
 esse é um conhecido metodo opensource de monitoramento de logs,esse sistema se baseia em 3 programas Elasticsearch,um indexador e processador de logs,Logstash um receptor e monitorador de logs e Kibana uma interface web para se monitorar e trabalhar esses dados,por isso é comumente conhecido como ELK,esses programas são baseados em java e sendo assim consomem uma quantidade donsideravel de memória ram,por isso foram colocados em uma maquina dedicada a isso,essa maquina recebe os logs de todas as etapas da aplicação.
 o ELK foi utilizado sem nenhum dos seus varios plugins de processamento de informações sendo utilizado apenas o kibana para filtrar os resultados encontrados e gerar os graficos exibidos nesse texto.todos os dados inseridos foram inseridos de uma dessas duas formas:
@@ -544,15 +543,40 @@ os dados inseridos pela biblioteca \myref{subsec}{loggingSystem} foram inseridos
 
 
 \sec{portainer}
-portainer é um painel de administração do docker no qual simplifica muito a administração e configuração de varias coisas mais complexas do docker,inclusive facilitando muito a definição de uso de hardware que será usado por cada container e facilitando o backup dos volumes,possibilitando inclusive o download de backups dos volumes diretamente do navegador em formato de arquivo tar.gz,facilitando também a recriação dos containers para atualização deles para versões mais novas,essa ferramenta alem de tudo é muito simples de ser instalada,visto que roda diretamente de dentro de um contaienr docker multi arquitetura,sendo assim o mesmo comando de instalação funciona em qualquer arquitetura disponivel para o container.
-o portainer também consegue unificar a administração dos diversos servidores utilizados durante o desenvolvimento e testes,sendo necessário apenas instalar o portainer em apenas um dos servidores,todas as outras maquinas só foram necessárias ativar a conexão remota pelo docker socket,isso faz com que o monitoramento de logs,uso de hardware e outros possa ser feito por alto diretamente pelo navegador,mas esse monitoramento não pode ser logado por isso foi preferido seguir o metodo descrito no \myref{sec}{containers docker}.
+portainer é um painel de administração do docker no qual simplifica muito a administração e configuração de varias coisas mais complexas do docker,
+inclusive facilitando muito a definição de uso de hardware que será usado por cada container e facilitando o backup dos volumes,
+possibilitando inclusive o download de backups dos volumes diretamente do navegador em formato de arquivo tar.gz,
+facilitando também a recriação dos containers para atualização deles para versões mais novas,
+essa ferramenta alem de tudo é muito simples de ser instalada,
+visto que roda diretamente de dentro de um contaienr docker multi arquitetura,
+sendo assim o mesmo comando de instalação funciona em qualquer arquitetura disponivel para o container.
+
+o portainer consegue controlar a partir de diversos metodos multiplas maquinas rodando docker, dessa forma conseguindo uma forma de controle unificada e simples de multiplas maquinas.
+alem disso atraves de sua interface web podemos executar a função exec como uma expecie de ssh pelo navegador web alem de uma forma simplificada de se atualizar os containers,
+alem disso é uma forma simples de se gerenciar um swarm docker e todas as replicações de containers existentes nele.
+
+o portainer também consegue unificar a administração dos diversos servidores utilizados durante o desenvolvimento e testes,
+sendo necessário apenas instalar o portainer em apenas um dos servidores,
+todas as outras maquinas só foram necessárias ativar a conexão remota pelo docker socket,
+isso faz com que o monitoramento de logs,uso de hardware e outros possa ser feito por alto diretamente pelo navegador,
+mas esse monitoramento não pode ser logado por isso foi preferido seguir o metodo descrito no \myref{sec}{containers docker}.
+
 \cite{portainer}
 
 %\section{biblioteca faker}
 %\label{sec:biblioteca faker}
 \sec{biblioteca faker}
-A biblioteca faker é uma biblioteca conhecida para a geração de mock data, que são dados gerados randomicamente para testar a capacidade de um algoritmo em lidar com dados. Essa biblioteca é comumente utilizada na etapa de testes de um algoritmo, seja para testes de segurança, para proteger de bots de criação de contas ou algo semelhante. É também utilizado para testes de estresse, quanto para qualquer tipo de teste que dependa de dados "realisticos".\newline
-Essa biblioteca foi selecionada pois é de fácil utilização, possui documentação abrangente e de fácil compreenção e suporte para múltiplos idiomas. Apesar da biblioteca apenas suportar todos os seus tipos de geração mais completos na localização dos EUA, dentre esses está um tipo que corresponde a todo um perfil de usuário, contendo desde endereço até a senha fraca ou forte. Para propósitos de testes, foram gerados apenas dados na localização do Brasil.\newline
+A biblioteca faker é uma biblioteca conhecida para a geração de mock data,
+que são dados gerados randomicamente para testar a capacidade de um algoritmo em lidar com dados.
+Essa biblioteca é comumente utilizada na etapa de testes de um algoritmo, seja para testes de segurança,
+para proteger de bots de criação de contas ou algo semelhante. É também utilizado para testes de estresse,
+quanto para qualquer tipo de teste que dependa de dados "realisticos".\newline
+Essa biblioteca foi selecionada pois é de fácil utilização, 
+possui documentação abrangente e de fácil compreenção e suporte para múltiplos idiomas. 
+Apesar da biblioteca apenas suportar todos os seus tipos de geração mais completos na localização dos EUA,
+dentre esses está um tipo que corresponde a todo um perfil de usuário, contendo desde endereço até a senha fraca ou forte.
+Para propósitos de testes, foram gerados apenas dados na localização do Brasil.\newline
+
 \cite{faker}
 
 %\section{biblioteca psutil}
@@ -1072,7 +1096,7 @@ o resultado encontrado do primeiro teste de manipulação de bancos de dados,que
 esses dados são comprovadamente sem ocorrencia de erros de acordo com o codigo descrito em \myref{sec}{geração de dados} de acordo com os dados coletados pelo \myref{sec}{containers docker} o uso de cpu de ambos bancos de dados em ambas arquiteturas é sempre muito próximo de 100\%
 em todos os nucleos disponiveis para o container,entretanto o computador arm por ter mais nucleos,é mais complicado de ser avaliada a porcentagem de uso devido a forma como o docker distribui a carga de uso de cpu.
 outro dado descoberto foi o de que quanto mais elementos ja existem cadastrados no banco de dados mais demorado o processo de cadastro da mesma quantidade de elementos,
-também existe uma peculiaridade visivel no uso de ram de todos container,eles não passam de 40\% de uso de ram,mas no processador arm existem alguns picos de alto uso de ram,onde é usado mais de 60\% de ram por um momento e na sequencia volta a ficar no intervalo de 25 \~\  40\%.
+também existe uma peculiaridade visivel no uso de ram de todos container,eles não passam de 40\% de uso de ram,mas no processador arm existem alguns picos de alto uso de ram,onde é usado mais de 60\% de ram por um momento e na sequencia volta a ficar no intervalo de 25 \~\  40\%. 
 
 
 
