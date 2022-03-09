@@ -1067,8 +1067,12 @@ isso resulta entre outras coisas numa maior demora da execução do postgres qua
 %\label{ch: resultados} 
 \ch{Resultados}
 
-\section{Resultados do Método}
-\label{sec: resultados}
+\sec{resultados de inserção fracionada}
+o resultado encontrado do primeiro teste de manipulação de bancos de dados,que é o teste de inserção continua,onde são inseridos varios ciclos de 5.000 elementos,num total de 100.000 dados inseridos,
+esses dados são comprovadamente sem ocorrencia de erros de acordo com o codigo descrito em \myref{sec}{geração de dados} de acordo com os dados coletados pelo \myref{sec}{containers docker} o uso de cpu de ambos bancos de dados em ambas arquiteturas é sempre muito próximo de 100\%
+em todos os nucleos disponiveis para o container,entretanto o computador arm por ter mais nucleos,é mais complicado de ser avaliada a porcentagem de uso devido a forma como o docker distribui a carga de uso de cpu.
+outro dado descoberto foi o de que quanto mais elementos ja existem cadastrados no banco de dados mais demorado o processo de cadastro da mesma quantidade de elementos,
+também existe uma peculiaridade visivel no uso de ram de todos container,eles não passam de 40\% de uso de ram,mas no processador arm existem alguns picos de alto uso de ram,onde é usado mais de 60\% de ram por um momento e na sequencia volta a ficar no intervalo de 25 \~\  40\%.
 
 
 
