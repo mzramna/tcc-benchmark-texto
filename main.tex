@@ -457,10 +457,22 @@ As JVMs estão disponíveis para muitas plataformas de hardware e software (ou s
 \markright{Introdução}
 \label{ch:introducao}
 %\ch{introducao}
-Esta pesquisa foi baseada na crescente adoção de processadores \myref{sig}{arm}, que conseguem entregar uma eficiência energética muito superior a comumente utilizada nos computadores e servidores (de arquitetura \myref{sig}{x86}). Esta arquitetura possui uma versão 64 bit, que hoje em dia é praticamente a única variante utilizada a \myref{sig}{x64}. Essa arquitetura é, no geral, apenas uma variante aditiva da \myref{sig}{x86} na qual são adicionadas varias instruções e vários suportes, sendo o principal deles o suporte a comandos 64 bits. O mesmo pode ser dito para a arquitetura \myref{sig}{aarch64} ou arm64 que é uma variante aditiva da \myref{sig}{arm},essa não é ,como a \myref{sig}{x64} uma versão única,mas sim uma "denominação" das variantes e evoluções da arquitetura \myref{sig}{arm} com suporte a 64bit.As arquiteturas passaram a ser denominadas dessa forma a partir da armv8,entretanto existem versões do \myref{sig}{arm},como o armv7l, que consegue trabalhar com instruções de 64bit,apesar de ser uma arquitetura 32 bits.\newline
-O foco da pesquisa foi feito em cima do uso de servidores \myref{sig}{arm}, que é baixo, apesar de totalmente possível e existente no mundo corporativo. Existem alguns servidores comerciais que utilizam a arquitetura \myref{sig}{arm} para seu funcionamento. Desta forma foi feita uma comparação na utilização desses processadores para a simulação de uma aplicação de banco de dados. Essa aplicação simula a utilização de forma realística de uma base de dados de uma locadora. \newline
-O cenário foi escolhido a partir de um esquema de banco de dados genérico da internet e foram utilizados os bancos de dados PostgreSQL e MariaDB, visto que são os bancos de dados de propósito geral mais utilizados atualmente. Foi preferido o MariaDB sobre o MySQL visto que não existe uma versão dele para a arquitetura \myref{sig}{arm} e ambos são basicamente o mesmo sistema.\newline
-Foi criado um programa para a geração de dados realísticos baseados na biblioteca faker implementada na linguagem Python. Estes dados são gerados para cada país específico em idiomas e caracteres compatíveis com a região escolhida. Desta forma é plausível que estes dados, como nome, telefone, endereço e até mesmo usuário e senha sejam possíveis de existirem. Foi escolhido essa forma de inserção pois um preenchimento de dados totalmente randômico e de tamanho fixo podem apresentar discrepâncias com o desempenho num ambiente real de uso, afetando tanto o tempo, quanto carga dos processadores de forma negativa. Os dados utilizados em cada teste são exatamente os mesmos, com a diferença apenas da quantidade, simbolizando o uso em um ambiente real. Desta fomra o benchmark se torna mais aplicável a realidade.\newline
+Esta pesquisa foi baseada na crescente adoção de processadores \myref{sig}{arm}, que conseguem entregar uma eficiência energética muito superior a comumente utilizada nos computadores e servidores (de arquitetura \myref{sig}{x86}).
+Esta arquitetura possui uma versão 64 bit, que hoje em dia é praticamente a única variante utilizada a \myref{sig}{x64}. Essa arquitetura é, no geral,
+apenas uma variante aditiva da \myref{sig}{x86} na qual são adicionadas varias instruções e vários suportes, sendo o principal deles o suporte a comandos 64 bits.
+O mesmo pode ser dito para a arquitetura \myref{sig}{aarch64} ou arm64 que é uma variante aditiva da \myref{sig}{arm},essa não é ,como a \myref{sig}{x64} uma versão única,
+mas sim uma "denominação" das variantes e evoluções da arquitetura \myref{sig}{arm} com suporte a 64bit.As arquiteturas passaram a ser denominadas dessa forma a partir da armv8,
+entretanto existem versões do \myref{sig}{arm},como o armv7l, que consegue trabalhar com instruções de 64bit,apesar de ser uma arquitetura 32 bits.\newline
+O foco da pesquisa foi feito em cima do uso de servidores \myref{sig}{arm}, que é baixo, apesar de totalmente possível e existente no mundo corporativo.
+Existem alguns servidores comerciais que utilizam a arquitetura \myref{sig}{arm} para seu funcionamento. Desta forma foi feita uma comparação na utilização desses processadores para a simulação de uma aplicação de banco de dados. 
+Essa aplicação simula a utilização de forma realística de uma base de dados de uma locadora. \newline
+O cenário foi escolhido a partir de um esquema de banco de dados genérico da internet e foram utilizados os bancos de dados PostgreSQL e MariaDB, visto que são os bancos de dados de propósito geral mais utilizados atualmente.
+Foi preferido o MariaDB sobre o MySQL visto que não existe uma versão dele para a arquitetura \myref{sig}{arm} e ambos são basicamente o mesmo sistema.\newline
+Foi criado um programa para a geração de dados realísticos baseados na biblioteca faker implementada na linguagem Python. Estes dados são gerados para cada país específico em idiomas e caracteres compatíveis com a região escolhida.
+Desta forma é plausível que estes dados, como nome, telefone, endereço e até mesmo usuário e senha sejam possíveis de existirem.
+Foi escolhido essa forma de inserção pois um preenchimento de dados totalmente randômico e de tamanho fixo podem apresentar discrepâncias com o desempenho num ambiente real de uso,
+afetando tanto o tempo, quanto carga dos processadores de forma negativa. Os dados utilizados em cada teste são exatamente os mesmos, com a diferença apenas da quantidade,
+simbolizando o uso em um ambiente real. Desta fomra o benchmark se torna mais aplicável a realidade.\newline
 
 %\chapter{Fundamentação Teórica}
 %\label{ch:fundamentacao teorica}
@@ -468,59 +480,136 @@ Foi criado um programa para a geração de dados realísticos baseados na biblio
 
 \sec{virtualização}
 virtualização é uma tecnica usada para simular um computador dentro de outro,dependendo do método utilizado ele pode simular apenas uma camada ou mais de uma das camadas de hardware e software de um computador .
-um computador virtualizado pode receber varios nomes dependendo do método utilizado para virtualizar,os mais utilizados hoje em dia são maquinas virtuais e containers docker,a principal difetença deles é a camada de harware na qual ele executa
+um computador virtualizado pode receber varios nomes dependendo do método utilizado para virtualizar,os mais utilizados hoje em dia são maquinas virtuais e containers docker,
+a principal difetença deles é a camada de harware na qual ele executa
 
 \sec{maquina virtual}
-uma maquina virtual é rodada por um programa dentro de um sistema operacional,maquinas virtuais possuem varias limitações,dentre elas por rodar em uma camada de software ele possui um menor desempenho de cpu e não pode ter acesso a outros hardwares do computador , na maioria dos mecanismos de virtualização de maquina virtual só pode-se acessar ram,dispositivos de dados e hardwares plug’n’play como hardwares usb,entretanto não é possivel de se utilizar placas de video ou outros hardwares pci,uma vantagem desses mecanismos de virtualização é que você facilmente pode utilizar qualquer programa de um computador convencional nele
+uma maquina virtual é rodada por um programa dentro de um sistema operacional,maquinas virtuais possuem varias limitações,
+dentre elas por rodar em uma camada de software ele possui um menor desempenho de cpu e não pode ter acesso a outros hardwares do computador ,
+na maioria dos mecanismos de virtualização de maquina virtual só pode-se acessar ram,dispositivos de dados e hardwares plug’n’play como hardwares usb,entretanto não é possivel de se utilizar placas de video ou outros hardwares pci,
+uma vantagem desses mecanismos de virtualização é que você facilmente pode utilizar qualquer programa de um computador convencional nele
 uma maquina virtual geralmente é criada ao se instalar um sistema real de um computador convencional em uma maquina virtual,ou ao se usar uma midia de restauração de maquina virtual
 
 \sec{arquiteturas}
-Por definição arquitetura de computador é um conjunto de circuitos eletrônicos padronizado associado a um conjunto de instruções de forma a simplificar a programação deles para que funcionem comandos diferentes do binário para a programação de um eletrônico. Os compiladores utilizam esses conjuntos de instrução para que seja convertido o código de uma linguagem de programação para um binário de um programa. A arquitetura também define/limita várias propriedades do hardware, como quantidade máxima de \myref{sig}{ram}, de disco, suporte ou não de saída de video, capacidades de rede e vários outros, mesmo que algumas dessas limitações possam ser contornadas utilizando variações da arquitetura chamadas microarquiteturas.\newline
+Por definição arquitetura de computador é um conjunto de circuitos eletrônicos padronizado associado a um conjunto de instruções de forma a simplificar a programação deles para que funcionem comandos diferentes do binário para a programação de um eletrônico. 
+Os compiladores utilizam esses conjuntos de instrução para que seja convertido o código de uma linguagem de programação para um binário de um programa.
+A arquitetura também define/limita várias propriedades do hardware, como quantidade máxima de \myref{sig}{ram},
+de disco, suporte ou não de saída de video, capacidades de rede e vários outros, mesmo que algumas dessas limitações possam ser contornadas utilizando variações da arquitetura chamadas microarquiteturas.\newline
 
-Uma micro arquitetura é quando adiciona-se tanto um circuito eletrônico novo ao circuito original da arquitetura quanto apenas uma simplificação ou reorganização dos comandos originais de uma arquitetura, entretanto, em uma micro arquitetura essas modificações são muito pequenas de forma a serem mais similares a arquitetura original do que uma nova arquitetura. Dessa forma as micro arquiteturas podem ser consideradas updates de uma arquitetura e quando são acumulados muitos desses updates, pode ser que seja gerada uma nova arquitetura, como foi o caso da arquitetura \myref{sig}{x86} para a arquitetura \myref{sig}{x64}, onde nesta última foi um upgrade grande o bastante da \myref{sig}{x86} a ponto de ser considerado uma nova arquitetura. A principal e mais visível diferença entre esses dois é a mudança de 32bit(na \myref{sig}{x86}) para 64bit(no \myref{sig}{x64}).\newline
+Uma micro arquitetura é quando adiciona-se tanto um circuito eletrônico novo ao circuito original da arquitetura quanto apenas uma simplificação ou reorganização dos comandos originais de uma arquitetura,
+entretanto, em uma micro arquitetura essas modificações são muito pequenas de forma a serem mais similares a arquitetura original do que uma nova arquitetura.
+Dessa forma as micro arquiteturas podem ser consideradas updates de uma arquitetura e quando são acumulados muitos desses updates, pode ser que seja gerada uma nova arquitetura,
+como foi o caso da arquitetura \myref{sig}{x86} para a arquitetura \myref{sig}{x64}, onde nesta última foi um upgrade grande o bastante da \myref{sig}{x86} a ponto de ser considerado uma nova arquitetura.
+A principal e mais visível diferença entre esses dois é a mudança de 32bit(na \myref{sig}{x86}) para 64bit(no \myref{sig}{x64}).\newline
 
-As arquiteturas também podem ser definidas sobre características fora da \myref{sig}{CPU}. Elas podem ser definidas em \myref{sig}{GPU},\myref{sig}{TPU} e vários outros módulos de hardware de um computador, inclusive existindo arquiteturas especiais que são aplicadas em nível de software. Estas não são necessariamente arquiteturas de computador mas sim um tipo diferente de arquitetura, onde existem máquinas abstratas que simplificam a programação de uma linguagem para que ela funcione de forma mais compatível com várias máquinas de arquiteturas de hardware diferentes. Sendo assim, se faz necessário otimizações na parte do código e da máquina virtual, como o caso da \myref{sig}{JVM} do java, em que a máquina virtual de cada arquitetura pode sofrer otimizações e isso faz com que ela funcione de forma melhor dependendo da máquina virtual em uma arquitetura e pior em outra e vice-versa, mas sem alterar o código.\newline
+As arquiteturas também podem ser definidas sobre características fora da \myref{sig}{CPU}. Elas podem ser definidas em \myref{sig}{GPU},
+\myref{sig}{TPU} e vários outros módulos de hardware de um computador, inclusive existindo arquiteturas especiais que são aplicadas em nível de software.
+Estas não são necessariamente arquiteturas de computador mas sim um tipo diferente de arquitetura,
+onde existem máquinas abstratas que simplificam a programação de uma linguagem para que ela funcione de forma mais compatível com várias máquinas de arquiteturas de hardware diferentes.
+Sendo assim, se faz necessário otimizações na parte do código e da máquina virtual, como o caso da \myref{sig}{JVM} do java,
+em que a máquina virtual de cada arquitetura pode sofrer otimizações e isso faz com que ela funcione de forma melhor dependendo da máquina virtual em uma arquitetura e pior em outra e vice-versa, mas sem alterar o código.\newline
 
-As arquiteturas não são limitadas apenas a esses previamente citados, mas as arquiteturas podem estar presentes em todos os tipos de circuitos integrados. Como exemplo os processadores de roteadores e aparelhos \myref{sig}{IOT} tais como lâmpadas e tomadas inteligentes. Isso quer dizer que uma arquitetura não necessariamente é algo que precise de um hardware potente ou que só funcione ou exista em computadores, mas são a forma como os algoritmos são interpretados no hardware, o que quer dizer que desde que exista um software e um hardware que se comuniquem existe uma arquitetura e provavelmente houve uma conversão da linguagem de programação para a linguagem de máquina dessa arquitetura deste dispositivo\newline
+As arquiteturas não são limitadas apenas a esses previamente citados, mas as arquiteturas podem estar presentes em todos os tipos de circuitos integrados.
+Como exemplo os processadores de roteadores e aparelhos \myref{sig}{IOT} tais como lâmpadas e tomadas inteligentes.
+Isso quer dizer que uma arquitetura não necessariamente é algo que precise de um hardware potente ou que só funcione ou exista em computadores,
+mas são a forma como os algoritmos são interpretados no hardware, o que quer dizer que ,desde que exista um software e um hardware que se comuniquem,
+existe uma arquitetura e provavelmente houve uma conversão da linguagem de programação para a linguagem de máquina dessa arquitetura deste dispositivo\newline
 
-As arquiteturas de computador são definidas para hardwares específicos, mas os softwares não necessariamente precisam de ser funcionais apenas em uma única arquitetura, por mais que ela seja diferente da arquitetura de outro computador. Isso é devido pelo fato dos conjuntos de instruções poderem ser diferentes mas suas funcionalidades gerais podem ser iguais. Mesmo que uma arquitetura seja totalmente diferente da outra, os softwares de uma podem funcionar na outra, por mais que sejam necessárias algumas adaptações. Algumas dessas adaptações podem ser tão grandes que às vezes é muito complexo essa adaptação de código. Para esses casos, ou mesmo para testar o código de uma arquitetura em outra, sem a necessidade dessa adaptação são usados programas chamados de emuladores ou simuladores. Estes programas funcionam como uma camada de compatibilidade entre a arquitetura real da máquina que está rodando e a arquitetura na qual o programa foi projetado para funcionar. Entretanto esse processo pode acarretar em uma perda considerável de desempenho, podendo resultar em casos onde máquinas com  516 gigaflops sejam necessárias para se emular máquinas com 230 gigaflops, como no caso de um emulador do sistema de console Playstation 3 utilizando o emulador rpcs3, e mesmo com essa ineficiência, esse emulador não tem 100\% de compatibilidade com os softwares existentes na plataforma,de forma que nem todos os softwares dessa plataforma funcionam exatamente como deveriam, ou mesmo funcionam. Por mais que ambas as máquinas executem o mesmo kernel de sistema ainda sim haverá perda de desempenho muito grande pois apesar de, em teoria, serem o mesmo sistema operacional a diferença de arquiteturas possui um peso muito maior do que o sistema operacional utilizado.\newline
+As arquiteturas de computador são definidas para hardwares específicos, mas os softwares não necessariamente precisam de ser funcionais apenas em uma única arquitetura, por mais que ela seja diferente da arquitetura de outro computador.
+Isso é devido pelo fato dos conjuntos de instruções poderem ser diferentes mas suas funcionalidades gerais podem ser iguais. Mesmo que uma arquitetura seja totalmente diferente da outra, os softwares de uma podem funcionar na outra,
+por mais que sejam necessárias algumas adaptações. Algumas dessas adaptações podem ser tão grandes que às vezes é muito complexo essa adaptação de código. Para esses casos, ou mesmo para testar o código de uma arquitetura em outra,
+sem a necessidade dessa adaptação são usados programas chamados de emuladores ou simuladores.
+Estes programas funcionam como uma camada de compatibilidade entre a arquitetura real da máquina que está rodando e a arquitetura na qual o programa foi projetado para funcionar.
+Entretanto esse processo pode acarretar em uma perda considerável de desempenho, podendo resultar em casos onde máquinas com  516 gigaflops sejam necessárias para se emular máquinas com 230 gigaflops,
+como no caso de um emulador do sistema de console Playstation 3 utilizando o emulador rpcs3, e mesmo com essa ineficiência, esse emulador não tem 100\% de compatibilidade com os softwares existentes na plataforma,
+de forma que nem todos os softwares dessa plataforma funcionam exatamente como deveriam, ou mesmo funcionam. Por mais que ambas as máquinas executem o mesmo kernel de sistema ainda sim haverá perda de desempenho muito grande pois apesar de, 
+em teoria, serem o mesmo sistema operacional a diferença de arquiteturas possui um peso muito maior do que o sistema operacional utilizado.\newline
 
-Esse é um exemplo de como mesmo com tudo para ser um cenário igual de utilização ou mesmo um cenário melhor ao se trocar uma arquitetura de um computador inúmeras adaptações devem ser feitas ou,como no caso do macos,criadas camadas de compatibilidade.Após o lançamento dos macbooks de 2020 com processador M1 que funcionam com a arquitetura \myref{sig}{aarch64} a apple lançou uma camada de compatibilidade dos softwares com arquitetura \myref{sig}{x64} para \myref{sig}{aarch64} chamado de rosetta2 esse software funciona parcialmente como um emulador,exceto que ele faz as adaptações num nível mais próximo do da máquina real e do sistema operacional nativo da máquina,resultando num desempenho muito superior a qualquer emulador existente,o rosetta2 funciona de forma análoga ao projeto \myref{sig}{WINE} do Linux que reinterpreta os programas windows para funcionarem no Linux,você tem uma pequena perda de desempenho por esse processo de reinterpretação em alguns casos,mas em outros essa perda é bem mais visível\newline
+Esse é um exemplo de como mesmo com tudo para ser um cenário igual de utilização ou mesmo um cenário melhor ao se trocar uma arquitetura de um computador inúmeras adaptações devem ser feitas ou,
+como no caso do macos,criadas camadas de compatibilidade.Após o lançamento dos macbooks de 2020 com processador M1 ,que funcionam com a arquitetura \myref{sig}{aarch64},
+a apple lançou uma camada de compatibilidade dos softwares com arquitetura \myref{sig}{x64} para \myref{sig}{aarch64} chamado de rosetta2 esse software funciona parcialmente como um emulador,
+exceto que ele faz as adaptações num nível mais próximo do da máquina real e do sistema operacional nativo da máquina,resultando num desempenho muito superior a qualquer emulador existente,
+o rosetta2 funciona de forma análoga ao projeto \myref{sig}{WINE} do Linux que reinterpreta os programas windows para funcionarem no Linux,você tem uma pequena perda de desempenho por esse processo de reinterpretação em alguns casos,
+mas em outros essa perda é bem mais visível\newline
 
-As arquiteturas de computador podem variar em diversos fatores de uma para outra de forma que existam varias funcionalidades que não foram pensadas para uma arquitetura que existem em outras.existem também propósitos diferentes para diferentes arquiteturas,como o caso dos processadores \myref{sig}{arm} que foram pensados para entregar uma grande eficiência energética,enquanto os processadores \myref{sig}{x86} foram pensados para apresentarem grande poder de processamento\newline
+As arquiteturas de computador podem variar em diversos fatores de uma para outra de forma que existam varias funcionalidades que não foram pensadas para uma arquitetura que existem em outras.
+existem também propósitos diferentes para diferentes arquiteturas,como o caso dos processadores \myref{sig}{arm} que foram pensados para entregar uma grande eficiência energética,
+enquanto os processadores \myref{sig}{x86} foram pensados para apresentarem grande poder de processamento\newline
 
-Existem alguns computadores com processador \myref{sig}{arm} que não são \myref{sig}{SBC} fazendo com que eles possuam várias possibilidades de upgrade, que não são possíveis nos computadores \myref{sig}{SBC}. Sendo assim, existem algumas pequenas variações no funcionamento dos computadores mesmo dentro de uma mesma arquitetura que tenderia a seguir padrões mais uniformes. Entretanto, uma peculiaridade tende a ser comum nos processadores \myref{sig}{arm}, eles costumam apresentar uma \myref{sig}{GPU} integrada e algumas outras unidades de processamento especializadas nas quais os processadores \myref{sig}{x86} costumam ter que ser adicionadas com chips externos. Uma dessas unidades é o \myref{sig}{TPU} que ficou mais conhecida com o lançamento do Windows 11 que exige em sua instalação por propósitos de segurança. O principal propósito da arquitetura \myref{sig}{arm} entretanto não é se diferenciar tanto da arquitetura \myref{sig}{x86}, mas sim tornar os computadores mais energeticamente eficientes, tanto que um computador doméstico comum utiliza de 200 a 300w por hora enquanto um computador raspberry pi 4, que é o computador \myref{sig}{arm} mais potente atualmente da marca e mais popular, consome em torno de 15w hora. É uma grande diferença, principalmente levando em conta que ambos tem a capacidade de utilizar os mesmos programas de trabalho, se considerarmos sistema operacional Linux e programas open source, tanto editores de texto, navegadores de internet quanto \myref{sig}{IDE}s de programação que estão disponíveis para ambos e para um uso comum funcionam tão bem quanto em um cenário real.\newline
+Existem alguns computadores com processador \myref{sig}{arm} que não são \myref{sig}{SBC} fazendo com que eles possuam várias possibilidades de upgrade, que não são possíveis nos computadores \myref{sig}{SBC}.
+Sendo assim, existem algumas pequenas variações no funcionamento dos computadores mesmo dentro de uma mesma arquitetura que tenderia a seguir padrões mais uniformes.
+Entretanto, uma peculiaridade tende a ser comum nos processadores \myref{sig}{arm},
+eles costumam apresentar uma \myref{sig}{GPU} integrada e algumas outras unidades de processamento especializadas nas quais os processadores \myref{sig}{x86} costumam ter que ser adicionadas com chips externos.
+Uma dessas unidades é o \myref{sig}{TPU} que ficou mais conhecida com o lançamento do Windows 11 que exige em sua instalação por propósitos de segurança.
+O principal propósito da arquitetura \myref{sig}{arm} entretanto não é se diferenciar tanto da arquitetura \myref{sig}{x86}, mas sim tornar os computadores mais energeticamente eficientes, 
+tanto que um computador doméstico comum utiliza de 200 a 300w por hora enquanto um computador raspberry pi 4, que é o computador \myref{sig}{arm} mais potente atualmente da marca e mais popular, 
+consome em torno de 15w hora. É uma grande diferença, principalmente levando em conta que ambos tem a capacidade de utilizar os mesmos programas de trabalho,
+se considerarmos sistema operacional Linux e programas open source, tanto editores de texto, navegadores de internet quanto \myref{sig}{IDE}s de programação que estão disponíveis para ambos e para um uso comum funcionam tão bem quanto em um cenário real.\newline
 
-Como os processadores \myref{sig}{arm} começaram a ficar mais comuns, visto que algumas fabricantes como a Apple e Gigabyte agora oferecem computadores e servidores baseados nessa arquitetura, faz com que seja cada vez mais fácil de se utilizar tal arquitetura por existirem mais consumidores e consequentemente uma oferta maior de programas feitos para serem executados nessa arquitetura. Visto o quanto um computador com processador \myref{sig}{arm} economiza energia para entregar o mesmo poder de processamento de um outro com processador \myref{sig}{x86}, essa diferença pode ser muito benéfica para os vários tipos de empresas que utilizam servidores, já que isso pode significar um impacto considerável no consumo energético da empresa dependendo do quanto ele é utilizado a nível de processamento.\newline
+Como os processadores \myref{sig}{arm} começaram a ficar mais comuns, visto que algumas fabricantes como a Apple e Gigabyte agora oferecem computadores e servidores baseados nessa arquitetura,
+faz com que seja cada vez mais fácil de se utilizar tal arquitetura por existirem mais consumidores e consequentemente uma oferta maior de programas feitos para serem executados nessa arquitetura.
+Visto o quanto um computador com processador \myref{sig}{arm} economiza energia para entregar o mesmo poder de processamento de um outro com processador \myref{sig}{x86},
+essa diferença pode ser muito benéfica para os vários tipos de empresas que utilizam servidores, já que isso pode significar um impacto considerável no consumo energético da empresa dependendo do quanto ele é utilizado a nível de processamento.\newline
 
 
 \sec{bancos de dados}
-Banco de dados é um método de armazenamento de dados de forma estruturada para que as informações sejam fáceis de serem associadas e filtradas. Podem, também, ser armazenadas de forma a economizar espaço de armazenamento, dependendo da otimização do banco de dados além da possibilidade de realizar redundâncias de segurança dos dados. Através dessas características, justifica-se a escolha dos bancos de dados como alvo do benchmark realizado para essa comparação de arquiteturas.
+Banco de dados é um método de armazenamento de dados de forma estruturada para que as informações sejam fáceis de serem associadas e filtradas.
+Podem, também, ser armazenadas de forma a economizar espaço de armazenamento, dependendo da otimização do banco de dados além da possibilidade de realizar redundâncias de segurança dos dados.
+Através dessas características, justifica-se a escolha dos bancos de dados como alvo do benchmark realizado para essa comparação de arquiteturas.
 
 Sistemas de computadores, dos mais diversos tipos, utilizam banco de dados para armazenamento de suas informações. Dessa forma, as informações ficam estruturadas em um formato padrão permitindo um acesso rápido a elas.
-os tipos de bancos de dados analizados são os bancos de dados sql relacional que são os mais genéricos,de forma que podem ser utilizados no máximo de aplicações diferentes possiveis,isso faz com que os bancos de dado sql sejam os melhores para serem simulados,um dos que foi analizado para ser testado foi o mongodb e o oracle,mas o mongodb não é relacional e o da oracle não existe uma versão para \myref{sig}{arm} até o momento que o projeto foi pensado.
+os tipos de bancos de dados analizados são os bancos de dados sql relacional que são os mais genéricos,de forma que podem ser utilizados no máximo de aplicações diferentes possiveis,
+isso faz com que os bancos de dado sql sejam os melhores para serem simulados,um dos que foi analizado para ser testado foi o mongodb e o oracle,mas o mongodb não é relacional e o da oracle não existe uma versão para \myref{sig}{arm} até o momento que o projeto foi pensado.
 
 
 \sec{docker}
-docker é um sistema de virtualização de maquinas que busca ser mais simples de ser gerenciado e entregar mais desempenho do hardware real da maquina que está sendo usada.o docker busca executar as chamadas de seus ambientes virtualizados ,chamados de containers,ao nivel do sistema operacional,logo a cima do kernel do sistma,isso faz com que seja possivel dedicar parte dos hardwares da maquina real para um container,sendo possivel dentre outras coisas dividir de forma fixa porções do hardware ,como definir limite de ram usado ou quantidade de nucleos de cpu usados,isso foi aplicado nos testes realizados,para padronizar as expecificações tecnicas dos container usados nos testes,como descrito em \myref{sec}{ontainers docker},outra das funcionalidades do docker é a implementação de volumes,que é a fora de isolar as pastas do container e manter elas mesmo caso o container seja reinstalado para realizar atualização,essas atualizações são feitas por meio do metodo de instalação dos containers docker,as imagens,as imagens são feitas sequindo o modelo de snapshot,onde cada imagem não tem nenhum programa ou biblioteca atualizada a menos que seja deliberadamente feito pelo proprio programa ou pelo administrador do container durante sua execução,mas esse segundo geralmente não é feito,visto que os containers quando precisam ser atualizados é preferivel usar a atualização por imagem do que executando comandos por dentro dos containers rodando,um grande motivo disso é o docker-compose,como é descrito no \myref{sec}{docker-compose}.
-o docker foi desenvolvido a pedido da google usando a linguagem go,também desenvolvida por ela,ele foi desenvolvido visando a simplificação da gerencia dos clusters de processamento da google,que utilizam dezenas de computadores mais fracos para fazer o processamento , de forma que é mais barato para compor o ambiente para o processamento tão potente quanto se comprasse varias armas muito mais caras,alem disso o docker também facilita a manutenção devido a facil reimplementação de um container caso a maquina tenha algum problema,como visto em situações que ocorreram durante o periodo do desenvolvimento da aplicação,para se reinstalar o stack de aplicações de monitoramento de dados do ELK \myref{sec}{elasticsearch monitoring stack} foi necessário apenas em torno de 2 horas,incluindo completa formatação do servidor onde o stack estava rodando,instalação do stack e completa configuração do mesmo,isso caso não fosse feito com docker facilmente levaria 1 dia para a completa reinstalação e reconfiguração do stack,isso porque o stack foi instalado facilmente com o docker-compose e todos os volumes contendo os arquivos de configuração possuiam backup,e a restauração de backups de volumes é extremamente simplificada,ainda mais utilizando a ferramenta portainer \myref{sec}{portainer} com o docker-sock,o docker-sock é um metodo de controle remoto do docker,utilizando o socket todas as configurações e gerenciamentos são feitos da mesma forma como se que se tivesse sendo feito diretamente na maquina que o docker está rodando,isso faz com que o docker seja muito simples de unificar e replicar o mesmo comando em diversas maquinas diferentes.
+docker é um sistema de virtualização de maquinas que busca ser mais simples de ser gerenciado e entregar mais desempenho do hardware real da maquina que está sendo usada.
+o docker busca executar as chamadas de seus ambientes virtualizados ,chamados de containers,ao nivel do sistema operacional,logo a cima do kernel do sistma,
+isso faz com que seja possivel dedicar parte dos hardwares da maquina real para um container,sendo possivel dentre outras coisas dividir de forma fixa porções do hardware ,
+como definir limite de ram usado ou quantidade de nucleos de cpu usados,isso foi aplicado nos testes realizados,para padronizar as expecificações tecnicas dos container usados nos testes,como descrito em \myref{sec}{ontainers docker},
+outra das funcionalidades do docker é a implementação de volumes,que é a fora de isolar as pastas do container e manter elas mesmo caso o container seja reinstalado para realizar atualização,
+essas atualizações são feitas por meio do metodo de instalação dos containers docker,as imagens,as imagens são feitas sequindo o modelo de snapshot,
+onde cada imagem não tem nenhum programa ou biblioteca atualizada a menos que seja deliberadamente feito pelo proprio programa ou pelo administrador do container durante sua execução,
+mas esse segundo geralmente não é feito,visto que os containers quando precisam ser atualizados é preferivel usar a atualização por imagem do que executando comandos por dentro dos containers rodando,
+um grande motivo disso é o docker-compose,como é descrito no \myref{sec}{docker-compose}.
+o docker foi desenvolvido a pedido da google usando a linguagem go,também desenvolvida por ela,ele foi desenvolvido visando a simplificação da gerencia dos clusters de processamento da google,
+que utilizam dezenas de computadores mais fracos para fazer o processamento ,
+de forma que é mais barato para compor o ambiente para o processamento tão potente quanto se comprasse varias armas muito mais caras,
+alem disso o docker também facilita a manutenção devido a facil reimplementação de um container caso a maquina tenha algum problema,
+como visto em situações que ocorreram durante o periodo do desenvolvimento da aplicação,para se reinstalar o stack de aplicações de monitoramento de dados do ELK \myref{sec}{elasticsearch monitoring stack} foi necessário apenas em torno de 2 horas,
+incluindo completa formatação do servidor onde o stack estava rodando,instalação do stack e completa configuração do mesmo,isso caso não fosse feito com docker facilmente levaria 1 dia para a completa reinstalação e reconfiguração do stack,
+isso porque o stack foi instalado facilmente com o docker-compose e todos os volumes contendo os arquivos de configuração possuiam backup,e a restauração de backups de volumes é extremamente simplificada,
+ainda mais utilizando a ferramenta portainer \myref{sec}{portainer} com o docker-sock,o docker-sock é um metodo de controle remoto do docker,
+utilizando o socket todas as configurações e gerenciamentos são feitos da mesma forma como se que se tivesse sendo feito diretamente na maquina que o docker está rodando,
+isso faz com que o docker seja muito simples de unificar e replicar o mesmo comando em diversas maquinas diferentes.
 \cite{dockerdoc}
 
 \subsec{container docker}
-um container docker roda a nivel de kernel, o que quer dizer que qualquer dispositivo ou dado disponivel na maquina real do usuario pode ser acessivel por um container docker,alem disso ele possui maior eficiencia de uso de ram e de cpu em comparação a maquinas virtuais ou outros metodos de virtualização, entretanto este método faz com que seja mais complicado de se utilizar de se acessar interface grafica de um container do que em uma maquina virtual,apesar de ainda ser possivel.
-uma das maiores utilizações dos containers docker é em ambientes de servidor,os containers docker são imaginados para isolar programas do sistema operacional da maquina real,de forma a caso algum problema ocorra com o programa,isso não afete a maquina real do usuario, em muitas situações são utilizados também como sistemas de desenvolvimento virtualizados ,de forma a sempre ser fácil de se replicar e de corrigir problemas durante a criação de um programa.
-containers docker também costumam ser mais faceis e rapidos de se implementar do que maquinas virtuais,visto que containers utilizam imagens docker para sua criação,que são geradas a partir de arquivos dockerfile ou a partir de um repositório
+um container docker roda a nivel de kernel, o que quer dizer que qualquer dispositivo ou dado disponivel na maquina real do usuario pode ser acessivel por um container docker,
+alem disso ele possui maior eficiencia de uso de ram e de cpu em comparação a maquinas virtuais ou outros metodos de virtualização,
+entretanto este método faz com que seja mais complicado de se utilizar de se acessar interface grafica de um container do que em uma maquina virtual,apesar de ainda ser possivel.
+uma das maiores utilizações dos containers docker é em ambientes de servidor,os containers docker são imaginados para isolar programas do sistema operacional da maquina real,
+de forma a caso algum problema ocorra com o programa,isso não afete a maquina real do usuario, em muitas situações são utilizados também como sistemas de desenvolvimento virtualizados ,
+de forma a sempre ser fácil de se replicar e de corrigir problemas durante a criação de um programa.
+containers docker também costumam ser mais faceis e rapidos de se implementar do que maquinas virtuais,visto que containers utilizam imagens docker para sua criação,
+que são geradas a partir de arquivos dockerfile ou a partir de um repositório
 
 
 \subsec{dockerfile}
-os arquivos dockerfile são mais leves de se transportar,mas demoram mais pra serem instaladas,visto que uma imagem instalada dessa forma segue todos os parametros de criação de um script de instalação,o que quer dizer que caso algum programa tenha sido expecificado como para ser compilado para se instalar uma imagem esse programa sera compilado todas as vezes que esta imagem for instalada,caso seja o caso o programa compilado sempre terá o desempenho de um programa de compilação expecífica,que geralmente é maior do que um programa de compilação genérica.
+os arquivos dockerfile são mais leves de se transportar,mas demoram mais pra serem instaladas,visto que uma imagem instalada dessa forma segue todos os parametros de criação de um script de instalação,
+o que quer dizer que caso algum programa tenha sido expecificado como para ser compilado para se instalar uma imagem esse programa sera compilado todas as vezes que esta imagem for instalada,
+caso seja o caso o programa compilado sempre terá o desempenho de um programa de compilação expecífica,que geralmente é maior do que um programa de compilação genérica.
 os arquivos dockerfile também facilitam a modificação de uma imagem caso seja necessário
 
 
 \subsec{imagem docker}
-uma imagem docker é gerada a partir de um arquivo dockerfile,a diferença principal é que: uma imagem docker é simplesmente baixada e extraida na maquina onde o container docker será executado,de forma que é muito mais facilmente replicada em varias maquinas diferentes do que um arquivo dockerfile.
-sempre os arquivos dockerfile são baseados em uma imagem docker,as imagens chamadas de imagens base,são implementações de sistemas operacionais linux ou windows para rodar em docker,na grande maioria dos contianers docker oficiais são baseados no sistema operacional alpine linux ou no debian,nessa ordem de importancia,ambos sistemas operacionais costumam ser mais leves,entretanto o sistema apline linux é pensado para ser otimizado para o docker,sendo mais leve e mais simples que outros sistemas operacionais,o que faz ser muito importante o conhecimento desse sistema aos que criam arquivos dockerfile.
-as imagens docker são distribuidas de 2 formas,a partir de repositorios como os dos sistemas linux ou a partir de arquivos compactados , sendo os repositorios o método mais utilizado de se distribuir essas imagens,o principal repositorio é o dockerhub,que é o repositório oficial do docker.
+uma imagem docker é gerada a partir de um arquivo dockerfile,a diferença principal é que: uma imagem docker é simplesmente baixada e extraida na maquina onde o container docker será executado,
+de forma que é muito mais facilmente replicada em varias maquinas diferentes do que um arquivo dockerfile.
+sempre os arquivos dockerfile são baseados em uma imagem docker,as imagens chamadas de imagens base,são implementações de sistemas operacionais linux ou windows para rodar em docker,
+na grande maioria dos contianers docker oficiais são baseados no sistema operacional alpine linux ou no debian,nessa ordem de importancia,ambos sistemas operacionais costumam ser mais leves,
+entretanto o sistema apline linux é pensado para ser otimizado para o docker,sendo mais leve e mais simples que outros sistemas operacionais,o que faz ser muito importante o conhecimento desse sistema aos que criam arquivos dockerfile.
+as imagens docker são distribuidas de 2 formas,a partir de repositorios como os dos sistemas linux ou a partir de arquivos compactados ,
+sendo os repositorios o método mais utilizado de se distribuir essas imagens,o principal repositorio é o dockerhub,que é o repositório oficial do docker.
 
 
 
@@ -532,14 +621,21 @@ o docker-compose foi implementado originalmente junto da versão 0.7.0 do docker
 
 
 \sec{elasticsearch monitoring stack}
-esse é um conhecido metodo opensource de monitoramento de logs,esse sistema se baseia em 3 programas Elasticsearch,um indexador e processador de logs,Logstash um receptor e monitorador de logs e Kibana uma interface web para se monitorar e trabalhar esses dados,por isso é comumente conhecido como ELK,esses programas são baseados em java e sendo assim consomem uma quantidade donsideravel de memória ram,por isso foram colocados em uma maquina dedicada a isso,essa maquina recebe os logs de todas as etapas da aplicação.
-o ELK foi utilizado sem nenhum dos seus varios plugins de processamento de informações sendo utilizado apenas o kibana para filtrar os resultados encontrados e gerar os graficos exibidos nesse texto.todos os dados inseridos foram inseridos de uma dessas duas formas:
+esse é um conhecido metodo opensource de monitoramento de logs,esse sistema se baseia em 3 programas Elasticsearch,
+um indexador e processador de logs,Logstash um receptor e monitorador de logs e Kibana uma interface web para se monitorar e trabalhar esses dados,
+por isso é comumente conhecido como ELK,esses programas são baseados em java e sendo assim consomem uma quantidade donsideravel de memória ram,
+por isso foram colocados em uma maquina dedicada a isso,essa maquina recebe os logs de todas as etapas da aplicação.
+o ELK foi utilizado sem nenhum dos seus varios plugins de processamento de informações sendo utilizado apenas o kibana para filtrar os resultados encontrados e gerar os graficos exibidos nesse texto.
+todos os dados inseridos foram inseridos de uma dessas duas formas:
 \cite{elk}
 \begin{itemize}
  \item inseridos via interface web usando arquivos json diretamente no kibana
  \item inseridos utilizando a \myref{subsec}{loggingSystem}
 \end{itemize}
-os dados inseridos pela biblioteca \myref{subsec}{loggingSystem} foram inseridos de forma separada,onde as informações do \myref{sec}{daemon de monitoramento} foram inseridas em uma porta expecífica e os dados filtrados,para melhor tratar a exibição das informações,e o restante dos logs,sejam de informações e exceção ou outros,inseridos em uma outra porta onde eram aceitos quaisquer tipos de dados que não foram filtrados para a primeira porta
+os dados inseridos pela biblioteca \myref{subsec}{loggingSystem} foram inseridos de forma separada,
+onde as informações do \myref{sec}{daemon de monitoramento} foram inseridas em uma porta expecífica e os dados filtrados,
+para melhor tratar a exibição das informações,e o restante dos logs,sejam de informações e exceção ou outros,
+inseridos em uma outra porta onde eram aceitos quaisquer tipos de dados que não foram filtrados para a primeira porta
 
 
 \sec{portainer}
@@ -582,7 +678,8 @@ Para propósitos de testes, foram gerados apenas dados na localização do Brasi
 %\section{biblioteca psutil}
 %\label{sec:biblioteca psutil}
 \sec{biblioteca psutil}
-a biblioteca psutil é compilada em c,uma biblioteca para monitoramento de hardware,ela consegue monitorar diversos tipos de informações do hardware,como informações detalhadas de uso de cpu,ram,processos,disco e varios outros dados completos.a biblioteca consegue listar varios dados das formas mais completas possiveis.a biblioteca é a mais utilizada e mais importante das bibliotecas de monitoramento de hardware da linguagem python.a psutil é de muito simples utilização e documentação muito bem feita
+a biblioteca psutil é compilada em c,uma biblioteca para monitoramento de hardware,ela consegue monitorar diversos tipos de informações do hardware,como informações detalhadas de uso de cpu,ram,processos,
+disco e varios outros dados completos.a biblioteca consegue listar varios dados das formas mais completas possiveis.a biblioteca é a mais utilizada e mais importante das bibliotecas de monitoramento de hardware da linguagem python.a psutil é de muito simples utilização e documentação muito bem feita
 \cite{psutil}
 
 %\chapter{Trabalhos Relacionados}
@@ -639,7 +736,8 @@ mostra as diferenças de resultados entre os diferentes rasp usados nos testes,o
 \cite{rpiplatformreplicable}
 
 \sec{HS06 Benchmark for an ARM Server}
-se resume em um benchmark e analize de um servidor de arquitetura arm,esse servidor possui 12 slots para encaixes das placas de soc,cada placa de soc possui 4 cpu ,com 4 nucleos, um pente de ram , 4 portas sata e um conector de porta 10 gbe para cada cpu,cada servidor consome cerca de 300w de energia
+se resume em um benchmark e analize de um servidor de arquitetura arm,esse servidor possui 12 slots para encaixes das placas de soc,cada placa de soc possui 4 cpu ,com 4 nucleos, um pente de ram ,
+4 portas sata e um conector de porta 10 gbe para cada cpu,cada servidor consome cerca de 300w de energia
 o consumo energetico desse servidor entre os analisados é o menor , o mais potente e com mais núcleos por rack
 \cite{hs06}
 
@@ -647,7 +745,8 @@ o consumo energetico desse servidor entre os analisados é o menor , o mais pote
 %\label{ch: testes}
 \ch{testes}
 Os testes foram realizados utilizando um Orangepi PC+ \cite{opipc} e um notebook .
-O Orange Pi é um SBC ARM baseado no processador allwinner h3 \cite{h3} com 3 usb 2.0 , 1GB de memória RAM DDR3, uma porta de rede 10/100 e wifi bgn. Essa configuração é relativamente antiga e seu processador é um 4-core de 1.3ghz no clock máximo,
+O Orange Pi é um SBC ARM baseado no processador allwinner h3 \cite{h3} com 3 usb 2.0 ,
+1GB de memória RAM DDR3, uma porta de rede 10/100 e wifi bgn. Essa configuração é relativamente antiga e seu processador é um 4-core de 1.3ghz no clock máximo,
 é um processador relativamente bom mas o conjunto de especificações não é bom o bastante para substituir um computador atual,
 devido a sua limitação de memória ram e de capacidade gráfica, mas consegue funcionar de forma satisfatória como servidor doméstico ,
 visto que seu processador é bom o bastante para operações simplificadas e poucos acessos,mas quando se tratam de muitos acessos ele pode não ser potente o bastante para aguentar.
@@ -660,7 +759,8 @@ mas como apenas para inicializar o sistema isso interfere,foi considerado como e
 Outros métodos que serão usados para manter as maquinas mais similares serão limitar o clock de ambos para que se mantivessem o mais próximos possivel,
 no orangepi foi definido para um clock maximo de 1ghz,esse sendo um valor redondo para facilitar os calculos de equivalência apesar de o orangepi poder se manter estável com clock de 1.2ghz,
 clock superior a isso pode causar problema com o fornecimento de energia,visto que não foi pensado para realmente ser utilizado dessa forma sem modificações na placa,
-que é o clock mais estável para o orange pi ,a memória usada será limitada a 1024 mb para o stack do docker e o armazenamento docker serão salvos em o armazenamento do docker foi movido nas 2 maquinas para um pendrive sandisk cruzer blade 2.0 de 16gb,
+que é o clock mais estável para o orange pi ,a memória usada será limitada a 1024 mb para o stack do docker.
+Para o armazenamento do docker serão salvos em o armazenamento do docker foi movido nas 2 maquinas para um pendrive sandisk cruzer blade 2.0 de 16gb,
 ambos comprados ao mesmo tempo e provavelmente provenientes do mesmo lote.\newline
 alem disso serão usadas versões do sistema debian,no orangepi o armbian e no pc o prórpio debian padrão,ambos na versão buster,a versão do docker usado em ambos é a versão community edition 20.10.12,
 e a versão do docker-compsoe é a versão 2.2.3,essas são as versões mais atuais no momento da execução dos testes,todos os outros softwares instalados diretamente na maquina são irrelevantes para os propósitos dos testes realizados.
@@ -670,8 +770,12 @@ e a versão do docker-compsoe é a versão 2.2.3,essas são as versões mais atu
 %\label{sec:testes de tempo}
 \sec{testes de tempo}
 os algoritimos principais do codigo são a geração do sqlite e a inserção nos bds finais,sendo assim ambos foram testados de formas diferentes e de metodos diferentes,que serão descritos a seguir.
-o algoritimo de geração de banco de dados é muito impactado pela quantidade de nucleos de cpu da maquina na qual foi rodada,mais do que a arquitetura ou clock dela,enquanto na inserção do banco de dadosas expecificações do computador não pareceram interferir tanto quanto a aleatóriedade da consistencia do funcionamento das threads,essa inconsistencia acabou fazendo com que os testes tivessem que ser realizados sob supervisão,sendo muitas vezes necessário interromper uma etapa e depois rinicia-la ,também por isso varias das operações foram testadas de formas diferentes.
-foram utilizadas sempre 2 etapas de testes ,primeiro um teste generalizado de funcionalidade com valores pequenos e outro para comprovar eficacia com valores variaveis,esses valores alteram varias coisas,mas principalmente quantidade de elementos gerados,isso para saber se a quantidade de elementos afeta a velocidade das operações
+o algoritimo de geração de banco de dados é muito impactado pela quantidade de nucleos de cpu da maquina na qual foi rodada,mais do que a arquitetura ou clock dela,
+enquanto na inserção do banco de dadosas expecificações do computador não pareceram interferir tanto quanto a aleatóriedade da consistencia do funcionamento das threads,
+essa inconsistencia acabou fazendo com que os testes tivessem que ser realizados sob supervisão,sendo muitas vezes necessário interromper uma etapa e depois rinicia-la ,
+também por isso varias das operações foram testadas de formas diferentes.
+foram utilizadas sempre 2 etapas de testes ,primeiro um teste generalizado de funcionalidade com valores pequenos e outro para comprovar eficacia com valores variaveis,
+esses valores alteram varias coisas,mas principalmente quantidade de elementos gerados,isso para saber se a quantidade de elementos afeta a velocidade das operações
 
 %\subsection{teste de tempo de criação do bd}
 %\label{subsec:teste de tempo de criação do bd}
@@ -718,7 +822,8 @@ todos esses testes tiveram resultados satisfatórios tornando possiveis as funci
 %\subsection{teste de tempo de operações paralelas}
 %\label{subsec:teste de tempo de operações paralelas}
 \subsec{teste de tempo de operações paralelas}
-essa foi a parte que demandou mais testes,estudos e desenvolvimento dos testes implementados,visto que alem da programação paralela ser mais complexa que a programação linear,ela é bem mais dificil de se testar,ela apenas foi possivel de testar após as outras classes principais,\myref{subsec}{gerenciadosDeBD} e \myref{subsec}{geradorDeSql}
+essa foi a parte que demandou mais testes,estudos e desenvolvimento dos testes implementados,visto que alem da programação paralela ser mais complexa que a programação linear,
+ela é bem mais dificil de se testar,ela apenas foi possivel de testar após as outras classes principais,\myref{subsec}{gerenciadosDeBD} e \myref{subsec}{geradorDeSql}
 
 %\section{testes de eficiencia}
 %\label{sec:testes de eficiencia}
@@ -730,7 +835,8 @@ quantidade de cpu gasto e quantidade de interação do operador do algoritimo pa
 %\subsection{teste de eficiencia de operações paralelas}
 %\label{subsec:teste de eficiencia de operações paralelas}
 \subsec{teste de eficiencia de operações paralelas}
-esse foi o teste que mais demandou tempo e esforço dentre os realizados,isso por que devido a complexidade da programação paralela,como ja dito em \myref{subsec}{teste de tempo de operações paralelas}, uma atenção e quantidade maior de testes foram demandadas.
+esse foi o teste que mais demandou tempo e esforço dentre os realizados,isso por que devido a complexidade da programação paralela,como ja dito em \myref{subsec}{teste de tempo de operações paralelas},
+uma atenção e quantidade maior de testes foram demandadas.
 um dos grandes motivadores desse tipo de teste foi a etapa de testes descrita em \myref{subsec}{teste de tempo de inserção no bd} apesar de essa etapa não ter sido complicada por si só ela demandou muita atenção pois apresentava muitos erros,
 essas operações demandaram muitos testes manuais de modo de programação paralela,
 sendo usando threads ou subprocessos,quantidade de operadores paralelos,
@@ -783,11 +889,13 @@ mas apenas para fins de simplificação no momento do uso foi criada essa biblio
 %\subsection{loggingSystem}
 %\label{subsec:loggingSystem}
 \subsec{loggingSystem}
-essa biblioteca é a responsável por toda a gerencia e logs e por todo o monitoramento do \myref{subsec}{monitorContainer},essa biblioteca basicamente é um complemento da biblioteca padrão de logs do python \cite{logging},
+essa biblioteca é a responsável por toda a gerencia e logs e por todo o monitoramento do \myref{subsec}{monitorContainer},
+essa biblioteca basicamente é um complemento da biblioteca padrão de logs do python \cite{logging},
 que tem uma implementação de comunicação com os servidores logstash,a biblioteca de forma inteligente verifica se os parametros de comunicação com o logstash estão funcionais,
 senão automaticamente salva todos os logs em um arquivo .log cujo nome foi informado durante a instancia do objeto da classe,
 a classe apenas consegue fazer essa verificação durante sua instancia,caso após isso a conexão seja perdida os logs não são enviados a lugar algum.
-as mensagens de erro são gerenciadas de forma simplificada,onde existe um parametro que define o formato da mensagem de log e o nome do gerenciador de log,alem de outros pequenos parametros para identificação de onde saiu o log que foi registrado.
+as mensagens de erro são gerenciadas de forma simplificada,onde existe um parametro que define o formato da mensagem de log e o nome do gerenciador de log,
+alem de outros pequenos parametros para identificação de onde saiu o log que foi registrado.
 existem alguns metodos nessa biblioteca que auxiliam no tratamento do stack overflow,onde esses metodos monitoram de onde saiu a execução do elemento que executou essa função,
 como no caso do tratamento de erro do stack overflow na criação de um dado de inserção da classe de criação de banco de dados,
 onde caso durante o tratamento de erro que faz com que a classe seja chamada novamente em loop até que consiga retornar um valor válido essa chamada recursiva não gere um esgotamento de memória,
@@ -798,7 +906,8 @@ sendo assim permitindo que um tratamento de erro mais complexo seja possivel sem
 %\subsection{paralelLib}
 %\label{subsec:paralelLib}
 \subsec{paralelLib}
-essa biblioteca possui 2 implementações diferentes de paralelização,utilizando a classe threading \cite{threading} e a classe multiprocessing \cite{multiprocessing},a classe threading utiliza threads para a paralelização de execuções,
+essa biblioteca possui 2 implementações diferentes de paralelização,utilizando a classe threading \cite{threading} e a classe multiprocessing \cite{multiprocessing},
+a classe threading utiliza threads para a paralelização de execuções,
 esse método foi inicialmente utilizado por ser de mais simples implementação e mais simples monitoramentoda execução,entretantodevido as limitações de segurança dessa classe foi escolhida uma implementação utilizando a classe multiprocessing,
 onde essa classe cria um grupo de subprocessos para o codigo que irão ser responsáveis pela execução do algoritimo selecionado.
 ambas as classes implementadas,a derivada de threading e a derivada de multiprocessing foram feitas de formas análogas e de simples substituição em codigo de uma para a outra de acordo com a necessidade,sendo assim funcionam muito parecidas.
@@ -842,7 +951,8 @@ essa biblioteca faz a consulta a partir de um arquivo json que lista as funçõe
 acompanhadas dos parametros de entrada e o filtro de retorno que será aplicado,
 isso faz com que muito facilmente possam ser pesquisadas apenas as informações realmente necessárias,
 simplificando assim o trabalho da analize de logs.
-a biblioteca ainda implementa o uso da biblioteca de logs para poder enviar todos os logs de forma automática para o logstash ou para um arquivo de log local,como descrito em \myref{subsec}{loggingSystem}
+a biblioteca ainda implementa o uso da biblioteca de logs para poder enviar todos os logs de forma automática para o logstash ou para um arquivo de log local,
+como descrito em \myref{subsec}{loggingSystem}
 
 %\subsection{gerenciadosDeBD}
 %\label{subsec:gerenciadosDeBD}
