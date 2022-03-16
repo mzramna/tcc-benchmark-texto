@@ -615,9 +615,14 @@ sendo os repositorios o método mais utilizado de se distribuir essas imagens,o 
 
 \sec{docker-compose}
 \cite{dockercomposedoc}
-e um metodos de implementação de containers docker,nesse metodo de implementação um arquivo de deploy é criado de forma que seja facilmente replicado,ele é utilizado muitas vezes juntamente com um arquivo de variaveis ambientais .env,esse arquivo contem variaveis para serem utilizadas no deploy do stack de containers,esse arquivo faz com que o mesmo arquivo docker-compose possa ser usado em mais de um ambiente/maquina diferente.
-o docker-compose é implementado num programa a parte que utiliza do framework do docker padrão,sendo assim é basicamente um programa oficial que simplifica o deploy por inserir sempre os comandos pre definidos neles de forma modificada pelo conteudo do arquivo .env .
-o docker-compose foi implementado originalmente junto da versão 0.7.0 do docker,essa foi a primeira versão do docker a permitir a linkagem de containers entre si,sem precisar de exposição das portas para processos 
+e um metodos de implementação de containers docker,nesse metodo de implementação um arquivo de deploy é criado de forma que seja facilmente replicado,
+ele é utilizado muitas vezes juntamente com um arquivo de variaveis ambientais .env,
+esse arquivo contem variaveis para serem utilizadas no deploy do stack de containers,
+esse arquivo faz com que o mesmo arquivo docker-compose possa ser usado em mais de um ambiente/maquina diferente.
+o docker-compose é implementado num programa a parte que utiliza do framework do docker padrão,
+sendo assim é basicamente um programa oficial que simplifica o deploy por inserir sempre os comandos pre definidos neles de forma modificada pelo conteudo do arquivo .env .
+o docker-compose foi implementado originalmente junto da versão 0.7.0 do docker,essa foi a primeira versão do docker a permitir a linkagem de containers entre si,
+sem precisar de exposição das portas para processos 
 
 
 \sec{elasticsearch monitoring stack}
@@ -803,13 +808,8 @@ foi necessário utilizar um hd ao invés de um ssd e como dito em \myref{sec}{ge
 \subsec{teste de tempo de operação de inserção no bd}
 este teste foi proposto para ser um teste de dois tipos,primiro um teste de operações sem falha,segundo um teste de operações de inserção para bancos de dado mais utilizados para esse propósito,
 dessa forma fica mais facil de determinar o cenário onde o banco de dados lida melhor com grande quantidade de inserções como em ambientes de registro de atividades,registros de logs ou de cadastros variados.
-para esse propósito foi utilizada uma variação do benchmark de criação de bd,mas dessa vez a inserção foi fracionada,uma constante identificada nos resultados desse teste é que quanto mais dados já haviam sido cadastrados mais tempo era gasto para se cadastrar mais dados,isso foi valido para ambos os bancos de dados em ambas as arquiteturas.
-outra constante foi que considerando os valores encontrados de tempo,sempre o postgres terminou mais rapidamente e no arm a diferença entre o postgres e o arm é grande,em raros casos essa diferença é pequena,mas sempre existe uma diferença em que o mariadb é mais demorado que o postgres.
-\begin{figure}
-  \includegraphics{valores tempo benchmark inserção fracionada.jpg}
-  \caption{valores tempo benchmark inserção fracionada}
-  \label{fig:resultados insercao fracionada}
-\end{figure}
+para esse propósito foi utilizada uma variação do benchmark de criação de bd,foi usada uma inserção fracionada dos dados,o que quer dizer que foram realizadas as operações em grupos de 5000 até completar os 100.000
+
 
 \subsec{teste de tempo de operações variadas no bd}
 após a confirmação da funcionalidade de forma satisfatória da geração do sqlite foi iniciado o processo de interação com o banco de dados,
@@ -1202,12 +1202,23 @@ isso resulta entre outras coisas numa maior demora da execução do postgres qua
 \ch{Resultados}
 
 \sec{resultados de inserção fracionada}
-o resultado encontrado do primeiro teste de manipulação de bancos de dados,que é o teste de inserção continua,onde são inseridos varios ciclos de 5.000 elementos,num total de 100.000 dados inseridos,
-esses dados são comprovadamente sem ocorrencia de erros de acordo com o codigo descrito em \myref{sec}{geração de dados} de acordo com os dados coletados pelo \myref{sec}{containers docker} o uso de cpu de ambos bancos de dados em ambas arquiteturas é sempre muito próximo de 100\%
-em todos os nucleos disponiveis para o container,entretanto o computador arm por ter mais nucleos,é mais complicado de ser avaliada a porcentagem de uso devido a forma como o docker distribui a carga de uso de cpu.
-outro dado descoberto foi o de que quanto mais elementos ja existem cadastrados no banco de dados mais demorado o processo de cadastro da mesma quantidade de elementos,
-também existe uma peculiaridade visivel no uso de ram de todos container,eles não passam de 40\% de uso de ram,mas no processador arm existem alguns picos de alto uso de ram,onde é usado mais de 60\% de ram por um momento e na sequencia volta a ficar no intervalo de 25 \~\  40\%. 
-
+o resultado encontrado do primeiro teste de manipulação de bancos de dados,que é o teste de inserção continua,onde foram inseridos de acordo com \myref{subsec}{teste de tempo de operação de inserção no bd},
+esses dados são comprovadamente sem ocorrencia de erros de acordo com o codigo descrito em \myref{sec}{geração de dados},
+de acordo com os dados coletados pelo \myref{sec}{containers docker} o uso de cpu de ambos bancos de dados em ambas arquiteturas é muito variado,onde em algumas etapas fica a baixo dos 40\%,e em outras fica próximo a 100\%,
+em todos os nucleos disponiveis para o container essa variação ocorre,entretanto o computador arm por ter mais nucleos fisicos,é mais complicado de ser avaliada a porcentagem de uso devido a forma como o docker distribui a carga de uso de cpu.
+Em relação ao uso de ram,ele se manteve mais constante,na arquitetura armhf o uso de ram é bem menor que no amd64,
+nas duas arquiteturas diferença do uso de ram é de cerca de 5\% ,onde no mariadb a variação faça com que o uso de ram seja ligeiramente maior no amd64.
+no postgres arm a memória ram varia em torno de 20 a 28\%,já no postgres amd essa variação é de 24 a 32\%.para o mariadb arm a memória fica entre 25 e 33\% e no amd varia de 28 a 36 \%,
+esses valores levam em conta que existem dados anormais,esses dados são ignorados.
+para o postgres a velocidade de disco de escrita é em torno de 500kbps para o arm e 3mbps para o amd,ja para o mariadb é de 3.5mbps para o arm e 9.5mbps para o amd.
+levando em conta a descrição de hardware de \myref{ch}{testes}, essas variações das velocidades são provavelmente devido a otimizações das arquiteturas para cada banco de dados.
+já a velocidade de leitura de disco é praticamente 0\% o tempo todo,isso provavelmente se deve a pouca necessidade de informações consultada dos dados cadastrados pelo algoritimo de benchmark.
+a principal diferença identificada em relação aos testes alem do previamente informado é o tempo,em 60\% das vezes o postgres arm é mais rapido que o amd,enquanto isso em 85\% das vezes do mariadb o amd é mais rapido
+\begin{figure}
+  \includegraphics{valores tempo benchmark inserção fracionada.jpg}
+  \caption{valores tempo benchmark inserção fracionada}
+  \label{fig:resultados insercao fracionada}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
